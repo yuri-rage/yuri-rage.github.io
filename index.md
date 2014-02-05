@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Yuri Rage's Blog
+title: Yuri Rage
 tagline: DIY, beer, geekery
 ---
 {% include JB/setup %}
