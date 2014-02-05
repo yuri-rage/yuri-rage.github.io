@@ -10,12 +10,21 @@ pygments: true
 #
 title : Yuri Rage
 tagline: Homebrew, DIY, geekery
+<<<<<<< HEAD
 author : 
   name : Yuri Rage
   email : av8or233@hotmail.com
   github : yuri-rage
   twitter : kampferstrahl
   feedburner : feedname
+=======
+author : Yuri
+  name :
+  email : av8or233@hotmail.com
+  github : yuri-rage
+  twitter : kampferstrahl
+  feedburner : 
+>>>>>>> 1765746e5f20647ea4047adee6dde5960831ac10
 
 # The production_url is only used when full-domain names are needed
 # such as sitemap.txt 

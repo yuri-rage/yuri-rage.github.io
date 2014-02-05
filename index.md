@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Hello World!
-tagline: Supporting tagline
+title: Yuri Rage
+tagline: DIY, beer, geekery
 ---
 {% include JB/setup %}
 
