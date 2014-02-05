@@ -319,9 +319,9 @@ task :commit do
   message = "Build site at #{Time.now.utc}"
   status = system("git commit -m \"#{message}\"")
   puts status ? "Success" : "Failed"
-  puts "\n## Pushing commits to remote"
-  status = system("git push origin source")
-  puts status ? "Success" : "Failed"
+ # puts "\n## Pushing commits to remote"
+ # status = system("git push origin source")
+ # puts status ? "Success" : "Failed"
 end
 
 desc "Deploy _site/ to master branch"
