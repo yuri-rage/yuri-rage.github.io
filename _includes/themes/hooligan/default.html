@@ -57,21 +57,7 @@
             </ul>
             <ul class="nav pull-right social visible-desktop">
               <li class="divider-vertical"></li>
-              {% if site.author.github %}
-                <li>
-                  <a href="https://github.com/{{ site.author.github }}" class="zocial github icon" target="_blank">
-                    <span class="hidden-desktop">Github</span>
-                  </a>
-                </li>
-              {% endif %}
-              {% if site.author.googleplus %}
-                <li>
-                  <a href="https://plus.google.com/{{ site.author.googleplus }}" class="zocial googleplus icon" target="_blank">
-                    <span class="hidden-desktop">Google+</span>
-                  </a>
-                </li>
-              {% endif %}    
-              {% if site.author.twitter %}
+               {% if site.author.twitter %}
                 <li>
                   <a href="https://twitter.com/{{ site.author.twitter }}" class="zocial twitter icon" target="_blank">
                   <span class="hidden-desktop">Twitter</span>
@@ -85,6 +71,27 @@
                   </a>
                 </li>
               {% endif %}           
+              {% if site.author.googleplus %}
+                <li>
+                  <a href="https://plus.google.com/{{ site.author.googleplus }}" class="zocial googleplus icon" target="_blank">
+                    <span class="hidden-desktop">Google+</span>
+                  </a>
+                </li>
+              {% endif %}    
+              {% if site.author.youtube %}
+                <li>
+                  <a href="http://www.youtube.com/user/{{ site.author.youtube }}" class="zocial youtube icon" target="_blank">
+                    <span class="hidden-desktop">YouTube</span>
+                  </a>
+                </li>
+              {% endif %}
+              {% if site.author.github %}
+                <li>
+                  <a href="https://github.com/{{ site.author.github }}" class="zocial github icon" target="_blank">
+                    <span class="hidden-desktop">Github</span>
+                  </a>
+                </li>
+              {% endif %}
               {% if site.author.linkedin %}
                 <li>
                   <a href="http://www.linkedin.com/in/{{ site.author.linkedin }}" class="zocial linkedin icon" target="_blank">
@@ -99,7 +106,7 @@
                   </a>
                 </li>
               {% endif %}
-            </ul>
+           </ul>
           </div>
         </div>
       </div>
