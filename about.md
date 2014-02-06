@@ -1,6 +1,7 @@
 ---
 layout: page
 title: "About"
+tagline: "Yuri Rage"
 ---
 
 This is my first blog.  I'm usually an early adopter, but blogging just never struck a chord with me.  So, I'm roughly a decade or two late to the party.  I wanted a place to develop a few projects, so I created a GitHub account.  As I learned about GitHub, I discovered GitHub Pages and thought perhaps I'd chronicle my projects along the way...enter this blog.
