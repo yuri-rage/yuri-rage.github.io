@@ -98,6 +98,12 @@ task :page do
   end
 end # task :page
 
+# jekyll build - added by yuri
+desc "Build local site"
+task :build do
+  system "jekyll build"
+end # task build
+
 desc "Launch preview environment"
 task :preview do
   system "jekyll serve -w"
@@ -324,8 +330,8 @@ task :commit do
  # puts status ? "Success" : "Failed"
 end
 
-desc "Deploy _site/ to master branch"
-task :deploy do
+desc "Push _site/ to master branch"
+task :push do
 #  puts "\n## Deleting master branch"
 #  status = system("git branch -D master")
 #  puts status ? "Success" : "Failed"
@@ -344,7 +350,7 @@ task :deploy do
 end
 
 desc "Commit and deploy _site/"
-task :commit_deploy => [:commit, :deploy] do
+task :deploy=> [:commit, :push] do
 end
 
 #Load custom rake scripts
