@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Yuri Rage
+title: Homebrewed 
 tagline: DIY, beer, geekery
 ---
 {% include JB/setup %}
