@@ -8,9 +8,11 @@ tagline: DIY, beer, geekery
 <div class="blog-index">  
   {% assign post = site.posts.first %}
   {% assign content = post.content %}
-  {% include post_detail.html %}
+  <h2><a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a></h2>
+  {{ post.content | strip_html | truncatewords:75}}<br>
+  <a href="{{ post.url }}">Read more...</a>
 </div>
-
+------------------
 ###All posts
 <ul class="posts">
   {% for post in site.posts %}
