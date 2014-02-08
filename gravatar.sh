@@ -6,9 +6,9 @@
 # Replace 'HASH' with the value specific to your email address.
 # Also, I pull the biggest version of the image available (256x256),
 # but this probably isn't necessary.
-# wget http://www.gravatar.com/avatar/e6d0b5f3b2f7cbd72e6cc3a3c110077c?s=256 -O /tmp/favicon.jpg
+ wget http://www.gravatar.com/avatar/e6d0b5f3b2f7cbd72e6cc3a3c110077c?s=256 -O /tmp/favicon.jpg
 
-# convert /tmp/favicon.jpg ./favicon.png
+ convert /tmp/favicon.jpg ./favicon.png
 
 # below is adapted from
 # http://www.brennan.id.au/13-Apache_Web_Server.html#favicon
