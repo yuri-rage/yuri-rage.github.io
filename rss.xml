@@ -11,7 +11,7 @@ title : RSS Feed
         <link>{{ site.production_url }}{{ site.rss_path }}</link>
         <link>{{ site.production_url }}</link>
         <lastBuildDate>{{ site.time | date_to_xmlschema }}</lastBuildDate>
-        <pubDate>{{ site.time | date_to_xmlschema }}</pubDate>
+        <pubDate>{{ site.time | date_to_rfc822 }}</pubDate>
         <ttl>1800</ttl>
 
 {% for post in site.posts %}
