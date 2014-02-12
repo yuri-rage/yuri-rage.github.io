@@ -10,7 +10,9 @@ date: "Sat, 8 Feb 2014 18:11:00 +0300"
 
 I started brewing beer because it seemed slightly interesting, and it was cheap to try using liquid extract, a few buckets, and some kitchen utensils.  I kept brewing beer because the hobby lends itself to *tons* of DIY projects across many genres.  I find the science and mechanics absolutely fascinating.  In this video series, I showcased my first microprocessor controlled homebrewery.  For mash temperature stabilization, I built a steam generator out of an old Cornelius keg and a water heater heating element.  Temperature and pressure were monitored and controlled via an [Arduino](http://www.arduino.cc) Duemilanove, connected to a serial port enabled Java front end, shown running on a Windows XP laptop.  You can read a bit more about that system in [this thread](http://www.homebrewtalk.com/f51/diy-steam-mash-system-yuri-27070).
 
-<iframe src='http://www.youtube.com/embed/EvU2rhT-_p4?list=PLAQYN1wmrHN7047dOIs0loPnv-IxXFoVM' width="560" height="315" frameborder="0" allowfullscreen="allowfullscreen"> </iframe>
+<div class="videoWrapper">
+<iframe width="560" height="315" src="//www.youtube.com/embed/EvU2rhT-_p4?list=PLAQYN1wmrHN7047dOIs0loPnv-IxXFoVM" frameborder="0" allowfullscreen="allowfullscreen"> </iframe>
+</div>
 
 I've since upgraded multiple times.  The Cornelius keg had plenty of volume, but the lid didn't seal well the way I had it configured.  To replace it, I converted a full sized 1/2 bbl Sanke keg for use as the steam vessel ([thread here](http://www.homebrewtalk.com/f51/yuri-goes-big-steam-new-boiler-point-use-water-heater-125953)).
 
