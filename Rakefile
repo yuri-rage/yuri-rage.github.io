@@ -40,7 +40,36 @@ module JB
   end #Path
 end #JB
 
-# Usage: rake post title="A Title" [date="2012-02-09"] [tags=[tag1,tag2]] [category="category"]
+# default task - added by yuri
+# Usage: rake"
+desc "Default task - post usage messages"
+task :default do
+  puts "Usage: rake"
+  puts "  print this message\n\n"
+  puts "Usage: rake post title=\"A Title\" [tags=[tag1,tag2]] [category=\"category\"]"
+  puts "  create a new post\n\n"
+  puts "Usage: rake page name=\"about.html\""
+  puts "  create a new page\n\n"
+  puts "Usage: rake update file=\"filename\""
+  puts "  update file's YAML date: front matter to current system time\n\n"
+  puts "Usage: rake build"
+  puts "  build site using jekyll\n\n"
+  puts "Usage: rake preview"
+  puts "  start jekyll site server at localhost:4000\n\n"
+  puts "Usage: rake theme:switch name=\"the-program\""
+  puts "  switch between jekyll-bootstrap themes\n\n"
+  puts "Usage: rake theme:install git=\"https://github.com/jekyllbootstrap/theme-twitter.git\""
+  puts "Usage: rake theme:install name=\"cool-theme\""
+  puts "  install new jekyll-bootstrap theme\n\n"
+  puts "Usage: rake commit"
+  puts "  stage files for git upload\n\n"
+  puts "Usage: rake push"
+  puts "  push (uploads) staged files to GitHub\n\n"
+  puts "Usage: rake deploy"
+  puts "  execute commit and push tasks to deploy (upload) site changes"
+end # default task
+
+# Usage: rake post title="A Title" [tags=[tag1,tag2]] [category="category"]
 desc "Begin a new post in #{CONFIG['posts']}"
 task :post do
   abort("rake aborted: '#{CONFIG['posts']}' directory not found.") unless FileTest.directory?(CONFIG['posts'])
@@ -49,12 +78,9 @@ task :post do
   category = ENV["category"] || ""
   category = "\"#{category.gsub(/-/,' ')}\"" if !category.empty?
   slug = title.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
-  begin
-    date = (ENV['date'] ? Time.parse(ENV['date']) : Time.now).strftime('%Y-%m-%d')
-  rescue => e
-    puts "Error - date format must be YYYY-MM-DD, please check you typed it correctly!"
-    exit -1
-  end
+  # yuri changed date to hard coded Time.now rather than user optioned
+  systime = Time.now
+  date = systime.strftime('%Y-%m-%d')
   filename = File.join(CONFIG['posts'], "#{date}-#{slug}.#{CONFIG['post_ext']}")
   if File.exist?(filename)
     abort("rake aborted!") if ask("#{filename} already exists. Do you want to overwrite?", ['y', 'n']) == 'n'
@@ -68,6 +94,8 @@ task :post do
     post.puts 'description: ""'
     post.puts "category: #{category}"
     post.puts "tags: #{tags}"
+    # yuri added rfc822 date front matter
+    post.puts "date: \"#{systime.rfc822}\""
     post.puts "---"
     post.puts "{% include JB/setup %}"
   end
@@ -93,17 +121,38 @@ task :page do
     post.puts "layout: page"
     post.puts "title: \"#{title}\""
     post.puts 'description: ""'
+    # yuri added rfc822 date front matter
+    post.puts "date: \"#{Time.now.rfc822}\""
     post.puts "---"
     post.puts "{% include JB/setup %}"
   end
 end # task :page
 
+# update page/post YAML front matter (publish) date to current date/time
+# added by yuri
+# Usage: rake update file="filename"
+desc "Update YAML date"
+task :update do
+  filename = ENV["file"]
+  if filename.nil?
+    abort("Usage: rake update file=\"filename\"")
+  end
+  if not File.exist?(filename)
+    abort("File not found.")
+  end
+  text = File.read(filename).gsub(/^date: ".*"/, "date: \"#{Time.now.rfc822}\"")
+  File.open(filename, "w").write(text)
+  puts "Updated publish date to #{Time.now.rfc822}"
+end # task update
+
 # jekyll build - added by yuri
+# Usage: rake build"
 desc "Build local site"
 task :build do
   system "jekyll build"
 end # task build
 
+# jekyll preview - added by yuri
 desc "Launch preview environment"
 task :preview do
   system "jekyll serve -w"

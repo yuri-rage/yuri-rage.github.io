@@ -4,6 +4,7 @@ title: "Microprocessor powered, steam injected brewing"
 description: ""
 category: "beer"
 tags: [beer, arduino]
+date: "Sat, 8 Feb 2014 18:11:00 +0300"
 ---
 {% include JB/setup %}
 

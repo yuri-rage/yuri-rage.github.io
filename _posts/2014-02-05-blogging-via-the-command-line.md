@@ -4,6 +4,7 @@ title: "Blogging via the command line"
 description: ""
 category: Geekery
 tags: [jekyll, linux]
+date: "Wed, 5 Feb 2014 12:29:00 +0300"
 ---
 {% include JB/setup %}
 
