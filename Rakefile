@@ -128,8 +128,9 @@ task :page do
   end
 end # task :page
 
-# update page/post YAML front matter (publish) date to current date/time
+# update page/post YAML frontmatter (publish) date to the file's last modified date/time
 # added by yuri
+# will not add "date: " frontmatter - only updates the existing one
 # Usage: rake update file="filename"
 desc "Update YAML date"
 task :update do
@@ -140,9 +141,14 @@ task :update do
   if not File.exist?(filename)
     abort("File not found.")
   end
-  text = File.read(filename).gsub(/^date: ".*"/, "date: \"#{Time.now.rfc822}\"")
-  File.open(filename, "w").write(text)
-  puts "Updated publish date to #{Time.now.rfc822}"
+  if open(filename).grep(/^date: ".*"/).length > 0
+    mdatetime = File.mtime(filename).rfc822
+    text = File.read(filename).gsub(/^date: ".*"/, "date: \"#{mdatetime}\"")
+    File.open(filename, "w").write(text)
+    puts "Updated publish date to #{mdatetime}"
+  else
+    puts "File not updated -- no [date: ] FrontMatter found."
+  end
 end # task update
 
 # jekyll build - added by yuri

@@ -4,7 +4,7 @@ title: "CNC for the home garage"
 description: ""
 category: "diy"
 tags: [cnc]
-date: "Wed, 12 Feb 2014 21:48:21 +0300"
+date: "Thu, 13 Feb 2014 20:56:44 +0300"
 ---
 {% include JB/setup %}
 
