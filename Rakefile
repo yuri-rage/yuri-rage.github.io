@@ -52,6 +52,8 @@ task :default do
   puts "  create a new page\n\n"
   puts "Usage: rake update file=\"filename\""
   puts "  update file's YAML date: front matter to current system time\n\n"
+  puts "Usage: rake edit [path=\"_drafts\"]"
+  puts "  edit the most recently modified file in [path] - default is _posts/*\n\n"
   puts "Usage: rake build"
   puts "  build site using jekyll\n\n"
   puts "Usage: rake preview"
@@ -151,6 +153,17 @@ task :update do
   end
 end # task update
 
+# edit (in gvim) the most recently modified file - added by yuri
+# useful after creating a new post or page
+# Usage: rake edit [path="_drafts"]
+desc "Edit the most recently modified file with gvim"
+task :edit do
+  path = ENV["path"] || "_posts"
+  file = Dir.glob("#{path}/*").max_by {|f| File.mtime(f)}
+  status = system("gvim #{file}")
+  puts status ? "Opening #{file} with gvim" : "Failed to open #{file}"
+end # task edit
+
 # jekyll build - added by yuri
 # Usage: rake build"
 desc "Build local site"
@@ -158,7 +171,7 @@ task :build do
   system "jekyll build"
 end # task build
 
-# jekyll preview - added by yuri
+# jekyll site preview - added by yuri
 desc "Launch preview environment"
 task :preview do
   system "jekyll serve -w"

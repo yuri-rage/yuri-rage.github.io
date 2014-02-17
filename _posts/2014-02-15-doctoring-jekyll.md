@@ -4,7 +4,7 @@ title: "Doctoring Jekyll"
 description: ""
 category: "geekery"
 tags: [jekyll, linux, github]
-date: "Sat, 15 Feb 2014 23:01:04 +0300"
+date: "Mon, 17 Feb 2014 21:55:19 +0300"
 ---
 {% include JB/setup %}
 
