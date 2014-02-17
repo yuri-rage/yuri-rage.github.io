@@ -5,7 +5,7 @@ tagline: "Do you even Jekyll, bro?"
 description: ""
 category: "geekery"
 tags: [jekyll, linux, github]
-date: "Mon, 17 Feb 2014 21:55:19 +0300"
+date: "Sat, 15 Feb 2014 21:55:19 +0300"
 ---
 {% include JB/setup %}
 
