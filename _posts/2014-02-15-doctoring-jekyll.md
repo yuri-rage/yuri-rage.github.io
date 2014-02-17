@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Doctoring Jekyll"
+tagline: "Do you even Jekyll, bro?"
 description: ""
 category: "geekery"
 tags: [jekyll, linux, github]
@@ -8,7 +9,7 @@ date: "Mon, 17 Feb 2014 21:55:19 +0300"
 ---
 {% include JB/setup %}
 
-Do you even Jekyll, bro?  I do now!  Here's how I improved upon the bootstrapped site that I cloned from [Jade Dominguez's](http://jekyllbootstrap.com) GitHub repository.  I used the [Hooligan theme](http://themes.jekyllbootstrap.com/preview/hooligan) - you'll see it throughout the code samples.  However, I doubt that any of these hacks are theme-unique.
+Here's how I improved upon the bootstrapped site that I cloned from [Jade Dominguez's](http://jekyllbootstrap.com) GitHub repository.  I used the [Hooligan theme](http://themes.jekyllbootstrap.com/preview/hooligan) - you'll see it throughout the code samples.  However, I doubt that any of these hacks are theme-unique.
 
 ##Add a post list to the site homepage##
 This bit of magic will list all of your posts, starting with the most recent, with links to their titles, each followed by the first 75 words.  Jekyll does support the `{% raw %}{% excerpt %}{% endraw %}` liquid tag, allowing you to use `<!--more-->` separators in your posts if you so choose.  Though perhaps less elegant, I thought this was simpler.  Here is everything that follows the YAML FrontMatter in my `index.md`:
