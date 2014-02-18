@@ -5,10 +5,10 @@ tagline: "Custom Rakefile tasks for Jekyll"
 description: ""
 category: "geekery" 
 tags: [jekyll, linux, ruby]
-date: "Mon, 17 Feb 2014 22:12:51 +0300"
+date: "Tue, 18 Feb 2014 21:54:23 +0300"
 ---
 {% include JB/setup %}
-Efficient is the new lazy.  Here are a bunch of tasks that I added to my Jekyll Rakefile in order to speed the publishing process.  I can do almost everything required to add content to this site by issuing a `rake [task]` command.  Hope you find some of them useful!
+I'm not lazy, I'm efficient!  To speed publishing, I added these tasks to my Jekyll Rakefile.  I can do almost everything required to add content to this site by issuing a `rake [task]` command.  Hope you find some of them useful!
 
 ##rake##
 
@@ -47,7 +47,7 @@ The default task prints a usage message - helpful if I ever forget about some of
 
 ##rake update file="filename"##
 
-Changes the file's date: FrontMatter to the specified file's last modified date/time (rfc822 format).  This is useful if you've been drafting a page/post over the course of several days and want it to reflect the actual date of publishing, rather than file the creation date.
+Changes the file's date: FrontMatter to the specified file's last modified date/time (rfc822 format).  This is useful if you've been drafting a page/post over the course of several days and want it to reflect the actual date of publishing, rather than the file creation date.
 
     # update page/post YAML frontmatter (publish) date to the file's last modified date/time
     # added by yuri
@@ -106,7 +106,7 @@ Two very simple tasks to build and preview your site using the Jekyll server.  T
 
 ##rake commit, push, and deploy##
 
-Automating common git tasks.  Again, these are rather oversimplified.  In fact, you can see where I commented out some of the more elegant [borrowed code](http://davidensinger.com/2013/07/automating-jekyll-deployment-to-github-pages-with-rake) and opted for really bare bones functionality.  The push/deploy tasks will push all files to the master branch.  So far, I haven't used forks when managing the site, so these tasks do everything I need of them.
+Automating common git tasks.  Again, these are rather oversimplified.  In fact, you can see where I commented out some of the more elegant [borrowed code](http://davidensinger.com/2013/07/automating-jekyll-deployment-to-github-pages-with-rake) and opted for really bare bones functionality.  The push/deploy tasks will publish all files to the master branch.  So far, I haven't used forks when managing the site, so these tasks do everything I need of them.
 
     # rake commit/deploy - added by yuri
     # from http://davidensinger.com/2013/07/automating-jekyll-deployment-to-github-pages-with-rake/
