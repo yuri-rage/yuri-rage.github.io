@@ -133,12 +133,13 @@ Create a CMakeLists.txt:
     #                                                                    #
     # Description: Simple CMakeLists.txt for Linux/Arduino               #
     #                                                                    #
-    # Usage: put CMakeLists.txt source directory                         #
+    # Usage: # put CMakeLists.txt in the project's source directory      #
     #        cd source_directory                                         #
     #        mkdir build                                                 #
     #        cd build                                                    #
     #        cmake ..                                                    #
     #        make                                                        #
+    #        make TARGET-upload # upload firmware with avrdude           #
     #        make TARGET-burn   # burn firmware with programmer          #
     #        make TARGET-serial # start terminal emulation as desired    #
     #                                                                    #
