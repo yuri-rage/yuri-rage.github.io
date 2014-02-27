@@ -89,11 +89,11 @@ You now have a CMake toolchain installed.  It will use the avr utilities you ins
 
 To test CMake, let's create use the blink.ino example sketch as a single file in its own directory:
 
-`cd ~`
-`mkdir blink`
-`cd blink`
-`gvim blink.ino`
-
+    cd ~
+    mkdir blink
+    cd blink
+    gvim blink.ino
+<p> </p>
     /*
       Blink
       Turns on an LED on for one second, then off for one second, repeatedly.
