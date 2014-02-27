@@ -13,7 +13,7 @@ Next level Arduino nerd rage, including Teensy support and command line build/up
 ##Install dependencies##
 The Arduino IDE requires a working JRE.  It used to absolutely require Java 6, but it seems as if I'm up and running with Java 7.  Regardless, issue:
 
-`sudo apt-get install -s arduino`
+`apt-get install -s arduino`
 
 The -s flag simulates installation of the Arduino IDE and will show all dependencies.  If java6-runtime and/or default-jre appear in the list of packages to be installed, then go ahead and `sudo apt-get install` them now.  *Do not* install the arduino package - we are going to do that manually.  While you're at it:
 
@@ -21,7 +21,7 @@ The -s flag simulates installation of the Arduino IDE and will show all dependen
 
 If you're running a 64-bit distro like I am, install a few 32 bit libraries:
 
-`apt-get install ia32-libs`
+`sudo apt-get install ia32-libs`
 
 ##Manually install the Arduino IDE##
 Instead of using the outdated \*buntu repository version of the IDE, grab a fresh copy from <http://www.arduino.cc>.  The repository flavored IDEs do not support Teensyduino very well, if at all.  Arduino 1.0.5 was the latest stable release as of this post.  Extract the file's contents into your home directory, then copy all files to /usr/share/arduino:
