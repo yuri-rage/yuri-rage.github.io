@@ -161,7 +161,7 @@ Create a CMakeLists.txt:
     # print_programmer_list()
 
     # sketch file - EDIT THIS FOR EACH NEW PROJECT
-    set(${TARGET_NAME}_SKETCH Blink.ino)
+    set(${TARGET_NAME}_SKETCH blink.ino)
 
     # source file(s) if c or cpp are used instead of a sketch
     # set(${TARGET_NAME}_SRCS blink.cpp)
