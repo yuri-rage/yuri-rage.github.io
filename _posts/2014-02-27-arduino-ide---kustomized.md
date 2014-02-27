@@ -19,7 +19,7 @@ The -s flag simulates installation of the Arduino IDE and will show all dependen
 
 `sudo apt-get install gcc-avr binutils-avr avr-libc avrdude cmake`
 
-If you're running a 64-bit distro like me, install a few 32 bit libraries:
+If you're running a 64-bit distro like I am, install a few 32 bit libraries:
 
 `apt-get install ia32-libs`
 
