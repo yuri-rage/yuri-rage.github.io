@@ -87,7 +87,7 @@ After all that, I *hate* the Arduino IDE.  I'd rather work in a better text/code
 
 You now have a CMake toolchain installed.  It will use the avr utilities you installed a little while ago.  The Arduino IDE includes its own avr utilities in /usr/share/arduino/hardware/tools/, so binaries produced from the command line may not be identical to those produced within the IDE.  You could go to the trouble of creating symlinks in /usr/local/bin to all of the executable files in the IDE directory, but I don't think that's entirely necessary.
 
-To test CMake, let's create use the blink.ino example sketch as a single file in its own directory:
+To test CMake, let's put the blink.ino example sketch into its own directory:
 
     cd ~
     mkdir blink
