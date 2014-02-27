@@ -15,7 +15,7 @@ The Arduino IDE requires a working JRE.  It used to solely depend on Java 6, but
 
 `apt-get install -s arduino`
 
-The -s flag simulates installation of the Arduino IDE and will show all dependencies.  If java6-runtime and/or default-jre appear in the list of packages to be installed, then go ahead `sudo apt-get install` them now.  *Do not* install the arduino package - we are going to do that manually.  While you're at it:
+The -s flag simulates installation of the Arduino IDE and will show all dependencies.  If java6-runtime and/or default-jre appear in the list of packages to be installed, then go ahead and `sudo apt-get install` them now.  *Do not* install the arduino package - we are going to do that manually.  While you're at it:
 
 `sudo apt-get install gcc-avr binutils-avr avr-libc avrdude cmake`
 
