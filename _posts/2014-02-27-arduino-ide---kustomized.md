@@ -13,7 +13,7 @@ Next level Arduino nerd rage, including Teensy support and command line build/up
 ##Install dependencies##
 The Arduino IDE requires a working JRE.  It used to absolutely require Java 6, but it seems as if I'm up and running with Java 7.  Regardless, issue:
 
-`apt-get install -s arduino`
+`sudo apt-get install -s arduino`
 
 The -s flag simulates installation of the Arduino IDE and will show all dependencies.  If java6-runtime and/or default-jre appear in the list of packages to be installed, then go ahead and `sudo apt-get install` them now.  *Do not* install the arduino package - we are going to do that manually.  While you're at it:
 
