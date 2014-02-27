@@ -11,7 +11,7 @@ date: "Thu, 27 Feb 2014 22:24:30 +0300"
 Next level Arduino nerd rage, including Teensy support and command line build/upload capabilities, all within a reasonably clean installation on any \*buntu variant.  Here's how:
 
 ##Install dependencies##
-The Arduino IDE requires a working JRE.  It used to solely depend on Java 6, but it seems as if I'm up and running with Java 7.  Regardless, issue:
+The Arduino IDE requires a working JRE.  It used to absolutely require Java 6, but it seems as if I'm up and running with Java 7.  Regardless, issue:
 
 `apt-get install -s arduino`
 
