@@ -4,7 +4,7 @@ title: "Zorin to the Max"
 tagline: "Linux for everynerd"
 description: ""
 category: 
-tags: []
+tags: [linux]
 date: "Tue, 13 May 2014 23:17:39 +0300"
 ---
 {% include JB/setup %}
