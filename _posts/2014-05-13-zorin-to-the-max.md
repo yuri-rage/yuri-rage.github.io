@@ -75,7 +75,7 @@ Try as I might, I couldn't find a decent clock applet for awn.  Also, with the a
     TEXT
     ${alignr}${color1}${time %a, %e %B %G   %T}
 
-Configure conky to start at login.  Open your newly enabled Cairo menu, then System Tools->Preferences->Startup Applications.  Click Add, and use these settings:
+Configure conky to start at login.  Open your newly enabled Cairo menu, then System Tools->Preferences->Startup Applications.  Click Add, and use these settings, substituting your home directory in place of mine:
 
 ![Conky Startup Screenshot]({{ site.url }}/images/conky-startup.png)
 
