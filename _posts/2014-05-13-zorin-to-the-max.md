@@ -9,7 +9,7 @@ date: "Tue, 13 May 2014 23:17:39 +0300"
 ---
 {% include JB/setup %}
 
-[Zorin OS](http://www.zorin-os.com) promises "Linux for everyone."  The distro is targeted toward Windows users who want a free/open source OS.  It does a pretty good job of delivering a fairly intuitive interface.  I've taken to using it because it automatically includes a lot of the often problematic multimedia/restricted content found in other *buntu and apt-based distros.  It makes a great all-around laptop or media center distro.
+[Zorin OS](http://www.zorin-os.com) promises "Linux for everyone."  The distro is targeted toward Windows users who want a free/open source OS.  It does a pretty good job of delivering a fairly intuitive interface.  I've taken to using it because it automatically includes a lot of the often problematic multimedia/restricted content found in other *buntu and apt-based distros.  It makes a great all-around laptop or media center distro.  Zorin OS 8 is current as of this post.
 
 Here's a screenshot of my extremely clean desktop followed by step-by-step instructions on how I achieved it:
 
