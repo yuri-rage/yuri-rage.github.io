@@ -38,7 +38,7 @@ In the application menu, go to System Tools->Preferences->Tweak Tool.  Here are 
 
 ##awn preferences##
 
-avant-window-navigator is a fantastic panel/dock.  It defaults to a Windows 7 look.  Let's make it even more unobtrusive.  The only applets I use are the Cairo Main Menu, DockBarX, Expander, Log Out, and Shut Down.  The notification area took up too much screen space and included features that I will never use.  We'll add a clock later.  If you want to further customize the awn applet icons, just drag an image file from the file manager onto any dock icon.
+avant-window-navigator is a fantastic panel/dock.  It defaults to a Windows 7 look.  Let's make it even more unobtrusive.  Right click on the dock and select Preferences.  The only applets I use are the Cairo Main Menu, DockBarX, Expander, Log Out, and Shut Down.  The notification area took up too much screen space and included features that I will never use.  We'll add a clock later.  If you want to further customize the awn applet icons, just drag an image file from the file manager onto any dock icon.
 
 ![Awn Preferences Screenshot]({{ site.url }}/images/awn-prefs.png)
 
