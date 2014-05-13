@@ -1,0 +1,420 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>
+      
+        Raking it in - 
+      
+      Yuri Rage
+    </title>
+    <meta name="description" content="">
+    <meta name="date" content="2014-02-18 21:54:23 +0300">
+    <meta name="author" content="Yuri Rage">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+
+    <link href="/assets/themes/hooligan/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/themes/hooligan/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">    
+    <link rel="stylesheet" type="text/css" href="/assets/themes/hooligan/css-social-buttons/css/zocial.stripped.css">
+    <link href="/assets/themes/hooligan/css/pygments.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/assets/themes/hooligan/css/darkstrap.css" rel="stylesheet" type="text/css" media="all">    
+    <link href="/assets/themes/hooligan/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/assets/yuri.css" rel="stylesheet" type="text/css" media="all">
+
+    <!-- fav and touch icons -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+  </head>
+
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>      
+
+
+          <a class="brand" href="/">Yuri Rage</a>
+
+
+          <div class="nav-collapse">
+            <ul class="nav">
+              
+              
+              
+
+
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+
+
+
+            </ul>
+            <ul class="nav pull-right social visible-desktop">
+              <li class="divider-vertical"></li>
+               
+                <li>
+                  <a href="https://twitter.com/kampferstrahl" class="zocial twitter icon" target="_blank">
+                  <span class="hidden-desktop">Twitter</span>
+                  </a>
+                </li>
+                                        
+                         
+                  
+              
+                <li>
+                  <a href="http://www.youtube.com/user/av8or233" class="zocial youtube icon" target="_blank">
+                    <span class="hidden-desktop">YouTube</span>
+                  </a>
+                </li>
+              
+              
+                <li>
+                  <a href="https://github.com/yuri-rage" class="zocial github icon" target="_blank">
+                    <span class="hidden-desktop">Github</span>
+                  </a>
+                </li>
+              
+                                  
+              
+                <li>
+                  <a href="http://feeds.feedburner.com/yuri-rage" class="zocial rss icon" target="_blank">
+                    <span class="hidden-desktop">FeedBurner</span>
+                  </a>
+                </li>
+              
+           </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+        
+<div class="page-header">
+  <h1>
+    Raking it in 
+    
+      <small>Custom Rakefile tasks for Jekyll</small>
+    
+  </h1>
+</div>
+
+<div class="row">
+  <div class="span8">
+    <p>I&#8217;m not lazy, I&#8217;m efficient! To speed publishing, I added these tasks to my Jekyll Rakefile. I can do almost everything required to add content to this site by issuing a <code>rake [task]</code> command. Hope you find some of them useful!</p>
+
+<h2 id='rake'>rake</h2>
+
+<p>The default task prints a usage message - helpful if I ever forget about some of the shortcuts I&#8217;ve created.</p>
+
+<pre><code># default task - added by yuri
+# Usage: rake&quot;
+desc &quot;Default task - post usage messages&quot;
+task :default do
+  puts &quot;Usage: rake&quot;
+  puts &quot;  print this message\n\n&quot;
+  puts &quot;Usage: rake post title=\&quot;A Title\&quot; [tags=[tag1,tag2]] [category=\&quot;category\&quot;]&quot;
+  puts &quot;  create a new post\n\n&quot;
+  puts &quot;Usage: rake page name=\&quot;about.html\&quot;&quot;
+  puts &quot;  create a new page\n\n&quot;
+  puts &quot;Usage: rake update file=\&quot;filename\&quot;&quot;
+  puts &quot;  update file&#39;s YAML date: front matter to current system time\n\n&quot;
+  puts &quot;Usage: rake edit [path=\&quot;_drafts\&quot;]&quot;
+  puts &quot;  edit the most recently modified file in [path] - default is _posts/*\n\n&quot;
+  puts &quot;Usage: rake build&quot;
+  puts &quot;  build site using jekyll\n\n&quot;
+  puts &quot;Usage: rake preview&quot;
+  puts &quot;  start jekyll site server at localhost:4000\n\n&quot;
+  puts &quot;Usage: rake theme:switch name=\&quot;the-program\&quot;&quot;
+  puts &quot;  switch between jekyll-bootstrap themes\n\n&quot;
+  puts &quot;Usage: rake theme:install git=\&quot;https://github.com/jekyllbootstrap/theme-twitter.git\&quot;&quot;
+  puts &quot;Usage: rake theme:install name=\&quot;cool-theme\&quot;&quot;
+  puts &quot;  install new jekyll-bootstrap theme\n\n&quot;
+  puts &quot;Usage: rake commit&quot;
+  puts &quot;  stage files for git upload\n\n&quot;
+  puts &quot;Usage: rake push&quot;
+  puts &quot;  push (uploads) staged files to GitHub\n\n&quot;
+  puts &quot;Usage: rake deploy&quot;
+  puts &quot;  execute commit and push tasks to deploy (upload) site changes&quot;
+end # default task</code></pre>
+
+<h2 id='rake_update_filefilename'>rake update file=&#8221;filename&#8221;</h2>
+
+<p>Changes the file&#8217;s date: FrontMatter to the specified file&#8217;s last modified date/time (rfc822 format). This is useful if you&#8217;ve been drafting a page/post over the course of several days and want it to reflect the actual date of publishing, rather than the file creation date.</p>
+
+<pre><code># update page/post YAML frontmatter (publish) date to the file&#39;s last modified date/time
+# added by yuri
+# will not add &quot;date: &quot; frontmatter - only updates the existing one
+# Usage: rake update file=&quot;filename&quot;
+desc &quot;Update YAML date&quot;
+task :update do
+  filename = ENV[&quot;file&quot;]
+  if filename.nil?
+    abort(&quot;Usage: rake update file=\&quot;filename\&quot;&quot;)
+  end
+  if not File.exist?(filename)
+    abort(&quot;File not found.&quot;)
+  end
+  if open(filename).grep(/^date: &quot;.*&quot;/).length &gt; 0
+    mdatetime = File.mtime(filename).rfc822
+    text = File.read(filename).gsub(/^date: &quot;.*&quot;/, &quot;date: \&quot;#{mdatetime}\&quot;&quot;)
+    File.open(filename, &quot;w&quot;).write(text)
+    puts &quot;Updated publish date to #{mdatetime}&quot;
+  else
+    puts &quot;File not updated -- no [date: ] FrontMatter found.&quot;
+  end
+end # task update</code></pre>
+
+<h2 id='rake_edit_path_drafts'>rake edit [path=&#8221;_drafts&#8221;]</h2>
+
+<p>Opens the most recently modified file in the specified path for editing with gvim. The default path is _posts. I find this particularly useful when creating new posts, since the post filenames are typically very similar, not fun to type, and bash autocompletion with the tab key only goes so far.</p>
+
+<pre><code># edit (in gvim) the most recently modified file - added by yuri
+# useful after creating a new post or page
+# Usage: rake edit [path=&quot;_drafts&quot;]
+desc &quot;Edit the most recently modified file with gvim&quot;
+task :edit do
+  path = ENV[&quot;path&quot;] || &quot;_posts&quot;
+  file = Dir.glob(&quot;#{path}/*&quot;).max_by {|f| File.mtime(f)}
+  status = system(&quot;gvim #{file}&quot;)
+  puts status ? &quot;Opening #{file} with gvim&quot; : &quot;Failed to open #{file}&quot;
+end # task edit</code></pre>
+
+<h2 id='rake_build_and_preview'>rake build and preview</h2>
+
+<p>Two very simple tasks to build and preview your site using the Jekyll server. They&#8217;re almost too simple, but I admit to using the preview task a lot.</p>
+
+<pre><code># jekyll build - added by yuri
+# Usage: rake build&quot;
+desc &quot;Build local site&quot;
+task :build do
+  system &quot;jekyll build&quot;
+end # task build
+
+# jekyll site preview - added by yuri
+desc &quot;Launch preview environment&quot;
+task :preview do
+  system &quot;jekyll serve -w&quot;
+end # task :preview</code></pre>
+
+<h2 id='rake_commit_push_and_deploy'>rake commit, push, and deploy</h2>
+
+<p>Automating common git tasks. Again, these are rather oversimplified. In fact, you can see where I commented out some of the more elegant <a href='http://davidensinger.com/2013/07/automating-jekyll-deployment-to-github-pages-with-rake'>borrowed code</a> and opted for really bare bones functionality. The push/deploy tasks will publish all files to the master branch. So far, I haven&#8217;t used forks when managing the site, so these tasks do everything I need of them.</p>
+
+<pre><code># rake commit/deploy - added by yuri
+# from http://davidensinger.com/2013/07/automating-jekyll-deployment-to-github-pages-with-rake/
+
+desc &quot;Commit _site/&quot;
+task :commit do
+  puts &quot;\n## Staging modified files&quot;
+  status = system(&quot;git add -A&quot;)
+  puts status ? &quot;Success&quot; : &quot;Failed&quot;
+  puts &quot;\n## Committing a site build at #{Time.now.utc}&quot;
+  message = &quot;Build site at #{Time.now.utc}&quot;
+  status = system(&quot;git commit -m \&quot;#{message}\&quot;&quot;)
+  puts status ? &quot;Success&quot; : &quot;Failed&quot;
+ # puts &quot;\n## Pushing commits to remote&quot;
+ # status = system(&quot;git push origin source&quot;)
+ # puts status ? &quot;Success&quot; : &quot;Failed&quot;
+end
+
+desc &quot;Push _site/ to master branch&quot;
+task :push do
+#  puts &quot;\n## Deleting master branch&quot;
+#  status = system(&quot;git branch -D master&quot;)
+#  puts status ? &quot;Success&quot; : &quot;Failed&quot;
+#  puts &quot;\n## Creating new master branch and switching to it&quot;
+#  status = system(&quot;git checkout -b master&quot;)
+#  puts status ? &quot;Success&quot; : &quot;Failed&quot;
+#  puts &quot;\n## Forcing the _site subdirectory to be project root&quot;
+#  status = system(&quot;git filter-branch --subdirectory-filter _site/ -f&quot;)
+#  puts status ? &quot;Success&quot; : &quot;Failed&quot;
+#  puts &quot;\n## Switching back to source branch&quot;
+#  status = system(&quot;git checkout source&quot;)
+#  puts status ? &quot;Success&quot; : &quot;Failed&quot;
+  puts &quot;\n## Pushing all branches to origin&quot;
+  status = system(&quot;git push --all origin&quot;)
+  puts status ? &quot;Success&quot; : &quot;Failed&quot;
+end
+
+desc &quot;Commit and deploy _site/&quot;
+task :deploy=&gt; [:commit, :push] do
+end</code></pre>
+    <hr>
+    <div class="pagination btn-group">
+      
+        <a class="btn prev" href="/geekery/2014/02/15/doctoring-jekyll" title="Doctoring Jekyll">&larr; Previous</a>
+      
+        <a class="btn" href="/archive.html">Archive</a>
+      
+        <a class="btn next" href="/geekery/2014/02/23/easy-as-pi" title="Easy as Pi?">Next &rarr;</a>
+      
+    </div>
+    <hr>
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    var disqus_shortname = 'yurirage'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+  
+  <div class="span4">
+    <section>
+      <h4>Published</h4>
+      <div class="date"><span>18 February 2014</span></div>
+    </section>
+    
+      <section>
+        <h4>Category</h4>
+        <span class="category">
+          geekery
+        </span>
+      </section>
+         
+    
+      <section>
+        <h4>Tags</h4>
+        <ul class="tag_box">
+          
+          
+
+
+  
+     
+    	<li><a href="/tags.html#jekyll-ref">jekyll <span>3</span></a></li>
+     
+    	<li><a href="/tags.html#linux-ref">linux <span>5</span></a></li>
+     
+    	<li><a href="/tags.html#ruby-ref">ruby <span>1</span></a></li>
+    
+  
+
+
+
+        </ul>
+      </section>
+             
+  </div>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; 2014 Yuri Rage
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://github.com/dhulihan/hooligan" target="_blank">The Hooligan Theme</a>
+        </p>
+      </footer>
+    </div> <!-- /container -->
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/assets/themes/hooligan/js/jquery.min.js"><\/script>')</script>
+    <script src="/assets/themes/hooligan/bootstrap/js/bootstrap.min.js"></script>
+
+    
+
+
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-47891547-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+  </body>
+</html>
+

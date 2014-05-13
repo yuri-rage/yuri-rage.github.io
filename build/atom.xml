@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+ <title>Yuri Rage</title>
+ <link href="http://yuri-rage.github.io/" rel="self"/>
+ <link href="http://yuri-rage.github.io"/>
+ <updated>2014-05-13 20:42:34 +0300</updated>
+ <id>http://yuri-rage.github.io</id>
+ <author>
+   <name>Yuri Rage</name>
+   <email></email>
+ </author>
+
+ 
+ <entry>
+   <title>Arduino IDE - Kustomized</title>
+   <link href="http://yuri-rage.github.io/geekery/2014/02/27/arduino-ide---kustomized"/>
+   <updated>2014-02-27 22:24:30 +0300</updated>
+   <id>http://yuri-rage.github.io/geekery/2014/02/27/arduino-ide---kustomized</id>
+   <content type="html">&lt;p&gt;Next level Arduino nerd rage, including Teensy support and command line build/upload capabilities, all within a reasonably clean installation on any *buntu variant. Here&amp;#8217;s how:&lt;/p&gt;
+
+&lt;h2 id='install_dependencies'&gt;Install dependencies&lt;/h2&gt;
+
+&lt;p&gt;The Arduino IDE requires a working JRE. It used to absolutely require Java 6, but it seems as if I&amp;#8217;m up and running with Java 7. Regardless, issue:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;apt-get install -s arduino&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The -s flag simulates installation of the Arduino IDE and will show all dependencies. If java6-runtime and/or default-jre appear in the list of packages to be installed, then go ahead and &lt;code&gt;sudo apt-get install&lt;/code&gt; them now. &lt;em&gt;Do not&lt;/em&gt; install the arduino package - we are going to do that manually. While you&amp;#8217;re at it:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo apt-get install gcc-avr binutils-avr avr-libc avrdude cmake&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;If you&amp;#8217;re running a 64-bit distro like I am, install a few 32 bit libraries:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo apt-get install ia32-libs&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id='manually_install_the_arduino_ide'&gt;Manually install the Arduino IDE&lt;/h2&gt;
+
+&lt;p&gt;Instead of using the outdated *buntu repository version of the IDE, grab a fresh copy from &lt;a href='http://www.arduino.cc'&gt;http://www.arduino.cc&lt;/a&gt;. The repository flavored IDEs do not support Teensyduino very well, if at all. Arduino 1.0.5 was the latest stable release as of this post. Extract the file&amp;#8217;s contents into your home directory, then copy all files to /usr/share/arduino:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd ~
+tar xvf arduino-1.0.5-linux64.tgz
+sudo mkdir /usr/share/arduino
+sudo cp -R arduino-1.0.5-linux64/* /usr/share/arduino&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now edit the arduino startup script and tell it where to find itself:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo gvim /usr/share/arduino/arduino&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#!/bin/sh
+
+# changed by Yuri to affect custom arduino install w/Teensy support 
+# APPDIR=&amp;quot;$(dirname -- &amp;quot;$(readlink -f -- &amp;quot;${0}&amp;quot;)&amp;quot; )&amp;quot;
+
+APPDIR=/usr/share/arduino
+
+cd &amp;quot;$APPDIR&amp;quot;
+ 
+for LIB in \
+    java/lib/rt.jar \
+    java/lib/tools.jar \
+    lib/*.jar \
+    ;
+do
+    CLASSPATH=&amp;quot;${CLASSPATH}:${LIB}&amp;quot;
+done
+export CLASSPATH
+
+LD_LIBRARY_PATH=`pwd`/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+export LD_LIBRARY_PATH
+
+export PATH=&amp;quot;${APPDIR}/java/bin:${PATH}&amp;quot;
+
+java -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel processing.app.Base &amp;quot;$@&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now move the edited arduino script to /usr/bin and give it a whirl!&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo mv /usr/share/arduino/arduino /usr/bin/arduino
+arduino&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;With any luck, you&amp;#8217;ll arrive at an almost fully functional Arduino IDE window.&lt;/p&gt;
+
+&lt;p&gt;To enable serial support, add yourself to the dialout group, then log off and log in again:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo usermod -a -G dialout yourUserName&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id='install_teensyduino'&gt;Install Teensyduino&lt;/h2&gt;
+
+&lt;p&gt;Follow the instructions at PJRC - &lt;a href='http://www.pjrc.com/teensy/td_download.html'&gt;http://www.pjrc.com/teensy/td_download.html&lt;/a&gt;. You will need to run the installer using sudo. When the it asks for the Arduino directory, select /usr/share/arduino.&lt;/p&gt;
+
+&lt;p&gt;Now, when you open the Arduino IDE, Teensy boards will be available options, and Teensyloader will run when you compile/upload.&lt;/p&gt;
+
+&lt;h2 id='configure_cmake'&gt;Configure CMake&lt;/h2&gt;
+
+&lt;p&gt;After all that, I &lt;em&gt;hate&lt;/em&gt; the Arduino IDE. I&amp;#8217;d rather work in a better text/code editor and build from the command line. Enter arduino-cmake!&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd ~
+git clone https://github.com/queezythegreat/arduino-cmake.git
+sudo mkdir /usr/share/arduino-cmake
+sudo cp -R arduino-cmake/cmake/* /usr/share/arduino-cmake&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You now have a CMake toolchain installed. It will use the avr utilities you installed a little while ago. The Arduino IDE includes its own avr utilities in /usr/share/arduino/hardware/tools/, so binaries produced from the command line may not be identical to those produced within the IDE. You could go to the trouble of creating symlinks in /usr/local/bin to all of the executable files in the IDE directory, but I don&amp;#8217;t think that&amp;#8217;s entirely necessary.&lt;/p&gt;
+
+&lt;p&gt;To test CMake, let&amp;#8217;s put the blink.ino example sketch into its own directory:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd ~
+mkdir blink
+cd blink
+gvim blink.ino&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;/*
+  Blink
+  Turns on an LED on for one second, then off for one second, repeatedly.
+ 
+  This example code is in the public domain.
+ */
+ 
+// Pin 13 has an LED connected on most Arduino boards.
+// Pin 11 has the LED on Teensy 2.0
+// Pin 6  has the LED on Teensy++ 2.0
+// Pin 13 has the LED on Teensy 3.0
+// give it a name:
+int led = 13;
+
+// the setup routine runs once when you press reset:
+void setup() {                
+  // initialize the digital pin as an output.
+  pinMode(led, OUTPUT);     
+}
+
+// the loop routine runs over and over again forever:
+void loop() {
+  digitalWrite(led, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(1000);               // wait for a second
+  digitalWrite(led, LOW);    // turn the LED off by making the voltage LOW
+  delay(1000);               // wait for a second
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create a CMakeLists.txt:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;gvim CMakeLists.txt&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#====================================================================#
+#                                                                    #
+# Author: Yuri                                                       #
+# Date  : 26 Feb 2014                                                # 
+#                                                                    #
+# Description: Simple CMakeLists.txt for Linux/Arduino               #
+#                                                                    #
+# Usage: # put CMakeLists.txt in the project&amp;#39;s source directory      #
+#        cd source_directory                                         #
+#        mkdir build                                                 #
+#        cd build                                                    #
+#        cmake ..                                                    #
+#        make                                                        #
+#        make TARGET-upload # upload firmware with avrdude           #
+#        make TARGET-burn   # burn firmware with programmer          #
+#        make TARGET-serial # start terminal emulation as desired    #
+#                                                                    #
+#====================================================================#
+
+# arduino toolchain
+set(CMAKE_TOOLCHAIN_FILE /usr/share/arduino-cmake/ArduinoToolchain.cmake)
+
+# CMake Version
+cmake_minimum_required(VERSION 2.8)
+
+# TARGET name - EDIT THIS FOR EACH NEW PROJECT
+set(TARGET_NAME blink)
+
+# language
+project(${TARGET_NAME} C CXX)
+
+# uncomment these lines to display lists during cmake
+# print_board_list()
+# print_programmer_list()
+
+# sketch file - EDIT THIS FOR EACH NEW PROJECT
+set(${TARGET_NAME}_SKETCH blink.ino)
+
+# source file(s) if c or cpp are used instead of a sketch
+# set(${TARGET_NAME}_SRCS blink.cpp)
+
+# enables a serial target that will start terminal emulation
+set(${TARGET_NAME}_SERIAL picocom @SERIAL_PORT@ -b 9600 -l)
+
+# board - use print_board_list() for options
+set(${TARGET_NAME}_BOARD uno)
+
+# programmer - use print_programmer_list() for options
+# set(${TARGET_NAME}_PROGRAMMER usbtinyisp)
+
+# port - used for SERIAL target, also required to get TARGET-burn option
+set(${TARGET_NAME}_PORT /dev/ttyUSB0)
+
+# generate firmware
+generate_arduino_firmware(${TARGET_NAME})&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;With any luck, you should be able to build and upload the sketch at this point without ever having touched the IDE:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir build
+cd build
+cmake ..
+make
+make blink-upload&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Explore the arduino-cmake directory that you cloned earlier for more info. Also, check out &lt;a href='https://github.com/queezythegreat/arduino-cmake'&gt;https://github.com/queezythegreat/arduino-cmake&lt;/a&gt;. Unfortunately, the toolchain doesn&amp;#8217;t support Teensy just yet, so you&amp;#8217;ll still have to use Teensyduino for that.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Easy as Pi?</title>
+   <link href="http://yuri-rage.github.io/geekery/2014/02/23/easy-as-pi"/>
+   <updated>2014-02-23 21:26:16 +0300</updated>
+   <id>http://yuri-rage.github.io/geekery/2014/02/23/easy-as-pi</id>
+   <content type="html">&lt;p&gt;I just set up my brand new $35 Raspberry Pi single board computer. Here&amp;#8217;s how I did it.&lt;/p&gt;
+
+&lt;h2 id='the_fixins'&gt;The fixin&amp;#8217;s&lt;/h2&gt;
+
+&lt;p&gt;All of the following are available via Amazon, most via Amazon Prime:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='http://www.amazon.com/gp/product/B00G1PNG54'&gt;CanaKit Raspberry Pi Ultimate Starter Kit&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://www.amazon.com/gp/product/B00B9996LA'&gt;Mini Wireless Keyboard/Touchpad&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://www.amazon.com/gp/product/B00GWV4D04'&gt;GertDuino - Arduino-like shield for Raspberry Pi&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://www.amazon.com/gp/product/B00HBVVKPA'&gt;Arduino Screw-Terminal Shield&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://www.amazon.com/gp/product/B003B1XR28'&gt;Male-Male Jumper Wires&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://www.amazon.com/gp/product/B008MRZSH8'&gt;Male-Female Jumper Wires&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://www.amazon.com/40pcs-Female-2-54mm-Jumper-Wires/dp/B007MRQC1K'&gt;Female-Female Jumper Wires&lt;/a&gt; - I forgot to order these, and they&amp;#8217;d have been really handy!&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://www.amazon.com/gp/product/B008HODWBU'&gt;DS18B20 1-Wire Temperature Sensor (Preassembled/Waterproof)&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://www.amazon.com/gp/product/B008HWTVQ2'&gt;SainSmart 1.8&amp;#8221; TFT Color LCD Module&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='first_boot'&gt;First boot!&lt;/h2&gt;
+
+&lt;p&gt;Although the CanaKit SD card was preloaded with NOOBS, it was quite out of date. Downloading and installing the latest image is simple enough. Just follow the directions on the &lt;a href='http://www.raspberrypi.org/downloads'&gt;raspberrypi.org download page&lt;/a&gt;. NOOBS 1.3.4 was current as of this post.&lt;/p&gt;
+
+&lt;p&gt;While you&amp;#8217;re waiting for the download to finish, charge the mini keyboard via USB. It does not connect via the included USB cable - that&amp;#8217;s just for charging the included lithium battery. The USB dongle is stored in the keyboard&amp;#8217;s battery compartment. Install it into one of the Pi&amp;#8217;s USB ports. Install the CanaKit wifi dongle in the other USB port. Good news: both will work with minimal to no additional configuration!&lt;/p&gt;
+
+&lt;p&gt;Once the SD card is up to date, install it into the Pi&amp;#8217;s SD card slot, connect the HDMI cable, and connect the power cord to the Pi. It will boot into NOOBS and prompt you to install a distro. I chose the 7 Jan 2014 release of Raspbian Wheezy, as it is likely the most mature distro available. The setup screens were very self-explanatory.&lt;/p&gt;
+
+&lt;p&gt;Once complete, reboot, and log in (user: pi, password: raspberry). Immediately run &lt;code&gt;raspi-config&lt;/code&gt; and, at a minimum, change the default password. Type startx and let&amp;#8217;er rip!&lt;/p&gt;
+
+&lt;h2 id='wifi_config'&gt;Wifi config&lt;/h2&gt;
+
+&lt;p&gt;Within the graphical interface, there is a wifi configuration tool that will get you online. But, it will require reconfiguration every time you start the window manager. To get wifi connectivity without the hassle, and without the need to even start the GUI, issue &lt;code&gt;sudo nano /etc/network/interfaces&lt;/code&gt;, make the file look like this, then &lt;code&gt;sudo reboot&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;auto lo
+
+iface lo inet loopback
+iface eth0 inet dhcp
+
+allow-hotplug wlan0
+iface wlan0 inet dhcp
+    wpa-ssid &amp;quot;your_SSID&amp;quot;
+    wpa-psk &amp;quot;your_password&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='merica_dammit'&gt;&amp;#8216;merica, dammit!&lt;/h2&gt;
+
+&lt;p&gt;Pi is a UK-ish product, and as such, is defaulted to use UK keyboard mapping. There are a ton of how-tos on changing the default to English/US, but none of them worked for me. This did the trick. Issue &lt;code&gt;sudo nano /etc/default/keyboard&lt;/code&gt; and change &amp;#8220;gb&amp;#8221; to &amp;#8220;us&amp;#8221;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;XKBMODEL=&amp;quot;pc105&amp;quot;
+XKBLAYOUT=&amp;quot;us&amp;quot;
+XKBVARIANT=&amp;quot;&amp;quot;
+XKBOPTIONS=&amp;quot;&amp;quot;
+
+BACKSPACE=&amp;quot;guess&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Just for good measure, do &lt;code&gt;sudo dpkg-reconfigure keyboard-configuration&lt;/code&gt;, and follow the on screen directions. Then &lt;code&gt;sudo reboot&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id='update_and_install_some_software'&gt;Update and install some software&lt;/h2&gt;
+
+&lt;p&gt;Update existing software:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get update; sudo apt-get upgrade&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Text editor (vim-gtk will allow the use of gvim):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install vim vim-gtk&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;VNC server (if you want one - I&amp;#8217;d rather &lt;code&gt;ssh -Y&lt;/code&gt;):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install tightvncserver
+vncserver :1 -geometry 1280x640 -depth 24&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Arduino IDE:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install arduino&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Serial Emulator:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install minicom&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='hdmi_sound'&gt;HDMI Sound&lt;/h2&gt;
+
+&lt;p&gt;I was about to pull my hair out trying to configure HDMI sound. Fortunately, I didn&amp;#8217;t irreversibly edit too many files or install additional software before discovering that I just needed to turn the volume on the TV up&amp;#8230; HDMI sound was already enabled by default!&lt;/p&gt;
+
+&lt;h2 id='pandorapianobar'&gt;Pandora/pianobar&lt;/h2&gt;
+
+&lt;p&gt;Now that sound works, install pianobar and check out Pandora via the command line! However, don&amp;#8217;t use the Wheezy repository (i.e., don&amp;#8217;t apt-get). As of this post, the repository version was sorely out of date and could not connect. Instead, follow these &lt;a href='http://technicaltom.wordpress.com/2013/09/12/pianobar_tls_handshake_fix/'&gt;very simple build instructions&lt;/a&gt;. Enjoy!&lt;/p&gt;
+
+&lt;h2 id='steven_hicksons_piauisuite_rocks'&gt;Steven Hickson&amp;#8217;s PiAUISuite rocks!&lt;/h2&gt;
+
+&lt;p&gt;Want to integrate YouTube playback? Voice command? Video playback? This guy put a ton of effort into creating some neat little hacks for the Raspberry Pi. I find it a bit difficult to sift through his blog, but he&amp;#8217;s got writeups and YouTube videos for most of his projects: &lt;a href='http://stevenhickson.blogspot.com'&gt;http://stevenhickson.blogspot.com&lt;/a&gt;. Check out the PiAUISuite on GitHub, as well: &lt;a href='https://github.com/StevenHickson/PiAUISuite'&gt;https://github.com/StevenHickson/PiAUISuite&lt;/a&gt;. I haven&amp;#8217;t been able to get his Midori user scripts to work with YouTube, but the command line tools are very nice.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Raking it in</title>
+   <link href="http://yuri-rage.github.io/geekery/2014/02/18/raking-it-in"/>
+   <updated>2014-02-18 21:54:23 +0300</updated>
+   <id>http://yuri-rage.github.io/geekery/2014/02/18/raking-it-in</id>
+   <content type="html">&lt;p&gt;I&amp;#8217;m not lazy, I&amp;#8217;m efficient! To speed publishing, I added these tasks to my Jekyll Rakefile. I can do almost everything required to add content to this site by issuing a &lt;code&gt;rake [task]&lt;/code&gt; command. Hope you find some of them useful!&lt;/p&gt;
+
+&lt;h2 id='rake'&gt;rake&lt;/h2&gt;
+
+&lt;p&gt;The default task prints a usage message - helpful if I ever forget about some of the shortcuts I&amp;#8217;ve created.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# default task - added by yuri
+# Usage: rake&amp;quot;
+desc &amp;quot;Default task - post usage messages&amp;quot;
+task :default do
+  puts &amp;quot;Usage: rake&amp;quot;
+  puts &amp;quot;  print this message\n\n&amp;quot;
+  puts &amp;quot;Usage: rake post title=\&amp;quot;A Title\&amp;quot; [tags=[tag1,tag2]] [category=\&amp;quot;category\&amp;quot;]&amp;quot;
+  puts &amp;quot;  create a new post\n\n&amp;quot;
+  puts &amp;quot;Usage: rake page name=\&amp;quot;about.html\&amp;quot;&amp;quot;
+  puts &amp;quot;  create a new page\n\n&amp;quot;
+  puts &amp;quot;Usage: rake update file=\&amp;quot;filename\&amp;quot;&amp;quot;
+  puts &amp;quot;  update file&amp;#39;s YAML date: front matter to current system time\n\n&amp;quot;
+  puts &amp;quot;Usage: rake edit [path=\&amp;quot;_drafts\&amp;quot;]&amp;quot;
+  puts &amp;quot;  edit the most recently modified file in [path] - default is _posts/*\n\n&amp;quot;
+  puts &amp;quot;Usage: rake build&amp;quot;
+  puts &amp;quot;  build site using jekyll\n\n&amp;quot;
+  puts &amp;quot;Usage: rake preview&amp;quot;
+  puts &amp;quot;  start jekyll site server at localhost:4000\n\n&amp;quot;
+  puts &amp;quot;Usage: rake theme:switch name=\&amp;quot;the-program\&amp;quot;&amp;quot;
+  puts &amp;quot;  switch between jekyll-bootstrap themes\n\n&amp;quot;
+  puts &amp;quot;Usage: rake theme:install git=\&amp;quot;https://github.com/jekyllbootstrap/theme-twitter.git\&amp;quot;&amp;quot;
+  puts &amp;quot;Usage: rake theme:install name=\&amp;quot;cool-theme\&amp;quot;&amp;quot;
+  puts &amp;quot;  install new jekyll-bootstrap theme\n\n&amp;quot;
+  puts &amp;quot;Usage: rake commit&amp;quot;
+  puts &amp;quot;  stage files for git upload\n\n&amp;quot;
+  puts &amp;quot;Usage: rake push&amp;quot;
+  puts &amp;quot;  push (uploads) staged files to GitHub\n\n&amp;quot;
+  puts &amp;quot;Usage: rake deploy&amp;quot;
+  puts &amp;quot;  execute commit and push tasks to deploy (upload) site changes&amp;quot;
+end # default task&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='rake_update_filefilename'&gt;rake update file=&amp;#8221;filename&amp;#8221;&lt;/h2&gt;
+
+&lt;p&gt;Changes the file&amp;#8217;s date: FrontMatter to the specified file&amp;#8217;s last modified date/time (rfc822 format). This is useful if you&amp;#8217;ve been drafting a page/post over the course of several days and want it to reflect the actual date of publishing, rather than the file creation date.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# update page/post YAML frontmatter (publish) date to the file&amp;#39;s last modified date/time
+# added by yuri
+# will not add &amp;quot;date: &amp;quot; frontmatter - only updates the existing one
+# Usage: rake update file=&amp;quot;filename&amp;quot;
+desc &amp;quot;Update YAML date&amp;quot;
+task :update do
+  filename = ENV[&amp;quot;file&amp;quot;]
+  if filename.nil?
+    abort(&amp;quot;Usage: rake update file=\&amp;quot;filename\&amp;quot;&amp;quot;)
+  end
+  if not File.exist?(filename)
+    abort(&amp;quot;File not found.&amp;quot;)
+  end
+  if open(filename).grep(/^date: &amp;quot;.*&amp;quot;/).length &amp;gt; 0
+    mdatetime = File.mtime(filename).rfc822
+    text = File.read(filename).gsub(/^date: &amp;quot;.*&amp;quot;/, &amp;quot;date: \&amp;quot;#{mdatetime}\&amp;quot;&amp;quot;)
+    File.open(filename, &amp;quot;w&amp;quot;).write(text)
+    puts &amp;quot;Updated publish date to #{mdatetime}&amp;quot;
+  else
+    puts &amp;quot;File not updated -- no [date: ] FrontMatter found.&amp;quot;
+  end
+end # task update&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='rake_edit_path_drafts'&gt;rake edit [path=&amp;#8221;_drafts&amp;#8221;]&lt;/h2&gt;
+
+&lt;p&gt;Opens the most recently modified file in the specified path for editing with gvim. The default path is _posts. I find this particularly useful when creating new posts, since the post filenames are typically very similar, not fun to type, and bash autocompletion with the tab key only goes so far.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# edit (in gvim) the most recently modified file - added by yuri
+# useful after creating a new post or page
+# Usage: rake edit [path=&amp;quot;_drafts&amp;quot;]
+desc &amp;quot;Edit the most recently modified file with gvim&amp;quot;
+task :edit do
+  path = ENV[&amp;quot;path&amp;quot;] || &amp;quot;_posts&amp;quot;
+  file = Dir.glob(&amp;quot;#{path}/*&amp;quot;).max_by {|f| File.mtime(f)}
+  status = system(&amp;quot;gvim #{file}&amp;quot;)
+  puts status ? &amp;quot;Opening #{file} with gvim&amp;quot; : &amp;quot;Failed to open #{file}&amp;quot;
+end # task edit&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='rake_build_and_preview'&gt;rake build and preview&lt;/h2&gt;
+
+&lt;p&gt;Two very simple tasks to build and preview your site using the Jekyll server. They&amp;#8217;re almost too simple, but I admit to using the preview task a lot.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# jekyll build - added by yuri
+# Usage: rake build&amp;quot;
+desc &amp;quot;Build local site&amp;quot;
+task :build do
+  system &amp;quot;jekyll build&amp;quot;
+end # task build
+
+# jekyll site preview - added by yuri
+desc &amp;quot;Launch preview environment&amp;quot;
+task :preview do
+  system &amp;quot;jekyll serve -w&amp;quot;
+end # task :preview&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='rake_commit_push_and_deploy'&gt;rake commit, push, and deploy&lt;/h2&gt;
+
+&lt;p&gt;Automating common git tasks. Again, these are rather oversimplified. In fact, you can see where I commented out some of the more elegant &lt;a href='http://davidensinger.com/2013/07/automating-jekyll-deployment-to-github-pages-with-rake'&gt;borrowed code&lt;/a&gt; and opted for really bare bones functionality. The push/deploy tasks will publish all files to the master branch. So far, I haven&amp;#8217;t used forks when managing the site, so these tasks do everything I need of them.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# rake commit/deploy - added by yuri
+# from http://davidensinger.com/2013/07/automating-jekyll-deployment-to-github-pages-with-rake/
+
+desc &amp;quot;Commit _site/&amp;quot;
+task :commit do
+  puts &amp;quot;\n## Staging modified files&amp;quot;
+  status = system(&amp;quot;git add -A&amp;quot;)
+  puts status ? &amp;quot;Success&amp;quot; : &amp;quot;Failed&amp;quot;
+  puts &amp;quot;\n## Committing a site build at #{Time.now.utc}&amp;quot;
+  message = &amp;quot;Build site at #{Time.now.utc}&amp;quot;
+  status = system(&amp;quot;git commit -m \&amp;quot;#{message}\&amp;quot;&amp;quot;)
+  puts status ? &amp;quot;Success&amp;quot; : &amp;quot;Failed&amp;quot;
+ # puts &amp;quot;\n## Pushing commits to remote&amp;quot;
+ # status = system(&amp;quot;git push origin source&amp;quot;)
+ # puts status ? &amp;quot;Success&amp;quot; : &amp;quot;Failed&amp;quot;
+end
+
+desc &amp;quot;Push _site/ to master branch&amp;quot;
+task :push do
+#  puts &amp;quot;\n## Deleting master branch&amp;quot;
+#  status = system(&amp;quot;git branch -D master&amp;quot;)
+#  puts status ? &amp;quot;Success&amp;quot; : &amp;quot;Failed&amp;quot;
+#  puts &amp;quot;\n## Creating new master branch and switching to it&amp;quot;
+#  status = system(&amp;quot;git checkout -b master&amp;quot;)
+#  puts status ? &amp;quot;Success&amp;quot; : &amp;quot;Failed&amp;quot;
+#  puts &amp;quot;\n## Forcing the _site subdirectory to be project root&amp;quot;
+#  status = system(&amp;quot;git filter-branch --subdirectory-filter _site/ -f&amp;quot;)
+#  puts status ? &amp;quot;Success&amp;quot; : &amp;quot;Failed&amp;quot;
+#  puts &amp;quot;\n## Switching back to source branch&amp;quot;
+#  status = system(&amp;quot;git checkout source&amp;quot;)
+#  puts status ? &amp;quot;Success&amp;quot; : &amp;quot;Failed&amp;quot;
+  puts &amp;quot;\n## Pushing all branches to origin&amp;quot;
+  status = system(&amp;quot;git push --all origin&amp;quot;)
+  puts status ? &amp;quot;Success&amp;quot; : &amp;quot;Failed&amp;quot;
+end
+
+desc &amp;quot;Commit and deploy _site/&amp;quot;
+task :deploy=&amp;gt; [:commit, :push] do
+end&lt;/code&gt;&lt;/pre&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Doctoring Jekyll</title>
+   <link href="http://yuri-rage.github.io/geekery/2014/02/15/doctoring-jekyll"/>
+   <updated>2014-02-15 21:55:19 +0300</updated>
+   <id>http://yuri-rage.github.io/geekery/2014/02/15/doctoring-jekyll</id>
+   <content type="html">&lt;p&gt;Here&amp;#8217;s how I improved upon the bootstrapped site that I cloned from &lt;a href='http://jekyllbootstrap.com'&gt;Jade Dominguez&amp;#8217;s&lt;/a&gt; GitHub repository. I used the &lt;a href='http://themes.jekyllbootstrap.com/preview/hooligan'&gt;Hooligan theme&lt;/a&gt; - you&amp;#8217;ll see it throughout the code samples. However, I doubt that any of these hacks are theme-unique.&lt;/p&gt;
+
+&lt;h2 id='add_a_post_list_to_the_site_homepage'&gt;Add a post list to the site homepage&lt;/h2&gt;
+
+&lt;p&gt;This bit of magic will list all of your posts, starting with the most recent, with links to their titles, each followed by the first 75 words. Jekyll does support the &lt;code&gt;{% excerpt %}&lt;/code&gt; liquid tag, allowing you to use &lt;code&gt;&amp;lt;!--more--&amp;gt;&lt;/code&gt; separators in your posts if you so choose. Though perhaps less elegant, I thought this was simpler. Here is everything that follows the YAML FrontMatter in my &lt;code&gt;index.md&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{% include JB/setup %}
+
+&amp;lt;div class=&amp;quot;blog-index&amp;quot;&amp;gt;  
+  {% for post in site.posts %}
+  &amp;lt;h2&amp;gt;&amp;lt;a href=&amp;quot;{{ BASE_PATH }}{{ post.url }}&amp;quot;&amp;gt;{{ post.title }}&amp;lt;/a&amp;gt;&amp;lt;/h2&amp;gt;
+  {{ post.content | strip_html | truncatewords:75 }}&amp;lt;br&amp;gt;
+  &amp;lt;a href=&amp;quot;{{ post.url }}&amp;quot;&amp;gt;Read more...&amp;lt;/a&amp;gt;&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+  {% endfor %}
+&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='add_a_social_media_icon'&gt;Add a social media icon&lt;/h2&gt;
+
+&lt;p&gt;The theme includes a few standard social media icons that can be displayed in the upper right of the site&amp;#8217;s navigation bar. While a YouTube channel button is included in &lt;code&gt;assets/themes/hooligan/css-social-buttons/&lt;/code&gt;, it isn&amp;#8217;t enabled in the nav-bar by default. Let&amp;#8217;s fix that.&lt;/p&gt;
+
+&lt;p&gt;First, add a YouTube line to the author section of &lt;code&gt;_config.yml&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;author : 
+  name : [your name]
+  email : [email address]
+  github : [user name]
+  twitter : [user name]
+  feedburner : [user name]
+  youtube : [user/channel name]&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Next, add the following markup to &lt;code&gt;_includes/themes/hooligan/default.html&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{% if site.author.youtube %}
+  &amp;lt;li&amp;gt;
+    &amp;lt;a href=&amp;quot;http://www.youtube.com/user/{{ site.author.youtube }}&amp;quot; class=&amp;quot;zocial youtube icon&amp;quot; target=&amp;quot;_blank&amp;quot;&amp;gt;
+    &amp;lt;span class=&amp;quot;hidden-desktop&amp;quot;&amp;gt;YouTube&amp;lt;/span&amp;gt;
+    &amp;lt;/a&amp;gt;
+  &amp;lt;/li&amp;gt;
+{% endif %}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The location for that last bit should be obvious - amongst other similarly listed social media icons. If you did it correctly, a theme-formatted YouTube icon should appear in your site&amp;#8217;s nav-bar, linked to your channel.&lt;/p&gt;
+
+&lt;h2 id='pretty_up_those_youtube_embeds'&gt;Pretty up those YouTube embeds&lt;/h2&gt;
+
+&lt;p&gt;While we&amp;#8217;re on the subject of YouTube, let&amp;#8217;s talk responsive content. If you simply copy and paste the embed markup from a YouTube video, it won&amp;#8217;t pass muster with Jekyll&amp;#8217;s markup engine. At a minimum, you&amp;#8217;ll need to delete the allowfullscreen keyword, and put a space before &lt;code&gt;&amp;lt;/iframe&amp;gt;&lt;/code&gt; in order to avoid site build errors. Once you&amp;#8217;ve done that, you&amp;#8217;ll get an ugly, fixed size frame that might look ok on a full-sized monitor, but will wreak havoc with page displays on tablets and mobile phones. One solution for auto-resizing YouTube frames is to make a &lt;a href='http://brettterpstra.com/2013/01/20/jekyll-tag-plugin-for-responsive-youtube-video-embeds'&gt;Jekyll plugin using a Ruby script&lt;/a&gt;. Unfortunately, as of this writing, &lt;a href='https://help.github.com/articles/pages-don-t-build-unable-to-run-jekyll'&gt;GitHub pages do not support Jekyll plugins&lt;/a&gt;. Let&amp;#8217;s try &lt;a href='http://css-tricks.com/NetMag/FluidWidthVideo/Article-FluidWidthVideo.php'&gt;something else&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;First, create your own style sheet. I called mine, &lt;code&gt;assets/yuri.css&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/* video wrapper - added by yuri */
+/* credit: http://css-tricks.com/NetMag/FluidWidthVideo/Article-FluidWidthVideo.php */
+.videoWrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  padding-top: 25px;
+  height: 0;
+}
+.videoWrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now, create your own HTML include file. Mine is &lt;code&gt;_includes/yuri-style.html&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;link href=&amp;quot;/assets/yuri.css&amp;quot; rel=&amp;quot;stylesheet&amp;quot; type=&amp;quot;text/css&amp;quot; media=&amp;quot;all&amp;quot;&amp;gt;
+
+&amp;lt;!-- fav and touch icons --&amp;gt;
+&amp;lt;link rel=&amp;quot;shortcut icon&amp;quot; href=&amp;quot;images/favicon.ico&amp;quot;&amp;gt;
+&amp;lt;link rel=&amp;quot;apple-touch-icon&amp;quot; href=&amp;quot;images/apple-touch-icon.png&amp;quot;&amp;gt;
+&amp;lt;link rel=&amp;quot;apple-touch-icon&amp;quot; sizes=&amp;quot;72x72&amp;quot; href=&amp;quot;images/apple-touch-icon-72x72.png&amp;quot;&amp;gt;
+&amp;lt;link rel=&amp;quot;apple-touch-icon&amp;quot; sizes=&amp;quot;114x114&amp;quot; href=&amp;quot;images/apple-touch-icon-114x114.png&amp;quot;&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note, I included favicon and touch icon markup as well. &lt;a href='http://richmartel.com/articles/favicon.php'&gt;Here&amp;#8217;s a brief tutorial on creating icons&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Finally, add a liquid include tag in the &lt;code&gt;&amp;lt;head&amp;gt;&lt;/code&gt; section of &lt;code&gt;_includes/themes/hooligan/default.html&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{% include yuri-style.html %}&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That last bit isn&amp;#8217;t the most elegant of solutions, as I had to edit a theme file (again), but if I ever change themes, I suppose I&amp;#8217;ll just reread my own tutorial! To be complete, here&amp;#8217;s an example of properly (for Jekyll) formatted embed markup:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;div class=&amp;#39;videoWrapper&amp;#39;&amp;gt;
+&amp;lt;iframe allowfullscreen=&amp;#39;allowfullscreen&amp;#39; frameborder=&amp;#39;0&amp;#39; height=&amp;#39;315&amp;#39; src=&amp;#39;//www.youtube.com/embed/lWOiGbt9tKg&amp;#39; width=&amp;#39;560&amp;#39;&amp;gt; &amp;lt;/iframe&amp;gt;
+&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note the space in front of &lt;code&gt;&amp;lt;/iframe&amp;gt;&lt;/code&gt;. Also note the allowfullscreen bit (which can just as easily be deleted entirely). For now, I have to remember to wrap them in a videoWrapper section and make sure the formatting meets Jekyll&amp;#8217;s picky syntax expectations. At some point, I may add a Rakefile task to simplify YouTube embeds. Look for a post in the near future about my Jekyll-specific Rakefile tasks.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Microprocessor powered, steam injected brewing</title>
+   <link href="http://yuri-rage.github.io/beer/2014/02/08/microprocessor-powered-steam-injected-brewing"/>
+   <updated>2014-02-08 18:11:00 +0300</updated>
+   <id>http://yuri-rage.github.io/beer/2014/02/08/microprocessor-powered-steam-injected-brewing</id>
+   <content type="html">&lt;p&gt;I started brewing beer because it seemed slightly interesting, and it was cheap to try using liquid extract, a few buckets, and some kitchen utensils. I kept brewing beer because the hobby lends itself to &lt;em&gt;tons&lt;/em&gt; of DIY projects across many genres. I find the science and mechanics absolutely fascinating. In this video series, I showcased my first microprocessor controlled homebrewery. For mash temperature stabilization, I built a steam generator out of an old Cornelius keg and a water heater heating element. Temperature and pressure were monitored and controlled via an &lt;a href='http://www.arduino.cc'&gt;Arduino&lt;/a&gt; Duemilanove, connected to a serial port enabled Java front end, shown running on a Windows XP laptop. You can read a bit more about that system in &lt;a href='http://www.homebrewtalk.com/f51/diy-steam-mash-system-yuri-27070'&gt;this thread&lt;/a&gt;.&lt;/p&gt;
+&lt;div class='videoWrapper'&gt;
+&lt;iframe allowfullscreen='allowfullscreen' frameborder='0' height='315' src='//www.youtube.com/embed/EvU2rhT-_p4?list=PLAQYN1wmrHN7047dOIs0loPnv-IxXFoVM' width='560'&gt; &lt;/iframe&gt;
+&lt;/div&gt;
+&lt;p&gt;I&amp;#8217;ve since upgraded multiple times. The Cornelius keg had plenty of volume, but the lid didn&amp;#8217;t seal well the way I had it configured. To replace it, I converted a full sized 1/2 bbl Sanke keg for use as the steam vessel (&lt;a href='http://www.homebrewtalk.com/f51/yuri-goes-big-steam-new-boiler-point-use-water-heater-125953'&gt;thread here&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;I never liked the Java/Windows interface, in part due to the fact that I negated the beauty of Java by using some OS specific serial port libraries. I also discovered OWFS on Linux, which allows the use of a &lt;a href='http://en.wikipedia.org/wiki/1-Wire'&gt;1-Wire microLAN&lt;/a&gt; as a file system. So I changed the architecture of my brewery to use a &lt;a href='http://www.cyrius.com/debian/nslu2'&gt;NSLU2 Debian &amp;#8220;Slug&amp;#8221;&lt;/a&gt; as the interface for a 1-Wire network. The Slug also served up a webpage that allowed remote viewing and control. &amp;#8220;GatorDad&amp;#8221; at Homebrewtalk has a &lt;a href='http://www.homebrewtalk.com/f51/monitoring-controlling-linux-cheap-240955'&gt;good writeup on OWFS&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Because I&amp;#8217;m never satisfied, I&amp;#8217;m looking at some combination of &lt;a href='http://www.raspberrypi.org'&gt;Raspberry Pi&lt;/a&gt;, &lt;a href='https://www.pjrc.com/teensy'&gt;Teensy&lt;/a&gt;, and/or Arduino as the next upgrade. I&amp;#8217;ve ordered the parts, and my friend jimmayhugh has some great info at &lt;a href='http://www.teensypi.com'&gt;http://www.teensypi.com&lt;/a&gt;. Progress is likely to be slow, but stay tuned, as I intend to cover the project here as it unfolds.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Blogging via the command line</title>
+   <link href="http://yuri-rage.github.io/Geekery/2014/02/05/blogging-via-the-command-line"/>
+   <updated>2014-02-05 12:29:00 +0300</updated>
+   <id>http://yuri-rage.github.io/Geekery/2014/02/05/blogging-via-the-command-line</id>
+   <content type="html">&lt;p&gt;I just set up my GitHub account and wondered if I could use it for web hosting. It turns out that not only can I host webpages on GitHub, but there is native Jekyll support. That means that I have an opportunity to learn a bit about web design in the 21st century (I haven&amp;#8217;t hand written an HTML doc yet!), and pick up some Ruby along the way. Git is a slick way to manage the site, as it provides innate version control and backup. Jekyll manages the dirty work of building a coherent, well formatted presentation. And most everything I do can be manipulated via the command line on a *nix machine (I&amp;#8217;m typing this in vim).&lt;/p&gt;
+
+&lt;p&gt;The repository for this site is located at &lt;a href='https://github.com/yuri-rage/yuri-rage.github.io'&gt;https://github.com/yuri-rage/yuri-rage.github.io&lt;/a&gt;. I&amp;#8217;ve already edited the Rakefile to more easily manage common git tasks.&lt;/p&gt;
+
+&lt;p&gt;Thanks to &lt;a href='http://jekyllbootstrap.com'&gt;http://jekyllbootstrap.com&lt;/a&gt; for providing a very complete, almost turnkey site. More to follow (albeit, probably slowly)!&lt;/p&gt;</content>
+ </entry>
+ 
+ 
+</feed>

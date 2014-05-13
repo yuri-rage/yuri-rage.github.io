@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>
+      
+        Easy as Pi? - 
+      
+      Yuri Rage
+    </title>
+    <meta name="description" content="Setting up a Raspberry Pi">
+    <meta name="date" content="2014-02-23 21:26:16 +0300">
+    <meta name="author" content="Yuri Rage">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+
+    <link href="/assets/themes/hooligan/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/themes/hooligan/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">    
+    <link rel="stylesheet" type="text/css" href="/assets/themes/hooligan/css-social-buttons/css/zocial.stripped.css">
+    <link href="/assets/themes/hooligan/css/pygments.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/assets/themes/hooligan/css/darkstrap.css" rel="stylesheet" type="text/css" media="all">    
+    <link href="/assets/themes/hooligan/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/assets/yuri.css" rel="stylesheet" type="text/css" media="all">
+
+    <!-- fav and touch icons -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+  </head>
+
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>      
+
+
+          <a class="brand" href="/">Yuri Rage</a>
+
+
+          <div class="nav-collapse">
+            <ul class="nav">
+              
+              
+              
+
+
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+
+
+
+            </ul>
+            <ul class="nav pull-right social visible-desktop">
+              <li class="divider-vertical"></li>
+               
+                <li>
+                  <a href="https://twitter.com/kampferstrahl" class="zocial twitter icon" target="_blank">
+                  <span class="hidden-desktop">Twitter</span>
+                  </a>
+                </li>
+                                        
+                         
+                  
+              
+                <li>
+                  <a href="http://www.youtube.com/user/av8or233" class="zocial youtube icon" target="_blank">
+                    <span class="hidden-desktop">YouTube</span>
+                  </a>
+                </li>
+              
+              
+                <li>
+                  <a href="https://github.com/yuri-rage" class="zocial github icon" target="_blank">
+                    <span class="hidden-desktop">Github</span>
+                  </a>
+                </li>
+              
+                                  
+              
+                <li>
+                  <a href="http://feeds.feedburner.com/yuri-rage" class="zocial rss icon" target="_blank">
+                    <span class="hidden-desktop">FeedBurner</span>
+                  </a>
+                </li>
+              
+           </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+        
+<div class="page-header">
+  <h1>
+    Easy as Pi? 
+    
+  </h1>
+</div>
+
+<div class="row">
+  <div class="span8">
+    <p>I just set up my brand new $35 Raspberry Pi single board computer. Here&#8217;s how I did it.</p>
+
+<h2 id='the_fixins'>The fixin&#8217;s</h2>
+
+<p>All of the following are available via Amazon, most via Amazon Prime:</p>
+
+<ul>
+<li><a href='http://www.amazon.com/gp/product/B00G1PNG54'>CanaKit Raspberry Pi Ultimate Starter Kit</a></li>
+
+<li><a href='http://www.amazon.com/gp/product/B00B9996LA'>Mini Wireless Keyboard/Touchpad</a></li>
+
+<li><a href='http://www.amazon.com/gp/product/B00GWV4D04'>GertDuino - Arduino-like shield for Raspberry Pi</a></li>
+
+<li><a href='http://www.amazon.com/gp/product/B00HBVVKPA'>Arduino Screw-Terminal Shield</a></li>
+
+<li><a href='http://www.amazon.com/gp/product/B003B1XR28'>Male-Male Jumper Wires</a></li>
+
+<li><a href='http://www.amazon.com/gp/product/B008MRZSH8'>Male-Female Jumper Wires</a></li>
+
+<li><a href='http://www.amazon.com/40pcs-Female-2-54mm-Jumper-Wires/dp/B007MRQC1K'>Female-Female Jumper Wires</a> - I forgot to order these, and they&#8217;d have been really handy!</li>
+
+<li><a href='http://www.amazon.com/gp/product/B008HODWBU'>DS18B20 1-Wire Temperature Sensor (Preassembled/Waterproof)</a></li>
+
+<li><a href='http://www.amazon.com/gp/product/B008HWTVQ2'>SainSmart 1.8&#8221; TFT Color LCD Module</a></li>
+</ul>
+
+<h2 id='first_boot'>First boot!</h2>
+
+<p>Although the CanaKit SD card was preloaded with NOOBS, it was quite out of date. Downloading and installing the latest image is simple enough. Just follow the directions on the <a href='http://www.raspberrypi.org/downloads'>raspberrypi.org download page</a>. NOOBS 1.3.4 was current as of this post.</p>
+
+<p>While you&#8217;re waiting for the download to finish, charge the mini keyboard via USB. It does not connect via the included USB cable - that&#8217;s just for charging the included lithium battery. The USB dongle is stored in the keyboard&#8217;s battery compartment. Install it into one of the Pi&#8217;s USB ports. Install the CanaKit wifi dongle in the other USB port. Good news: both will work with minimal to no additional configuration!</p>
+
+<p>Once the SD card is up to date, install it into the Pi&#8217;s SD card slot, connect the HDMI cable, and connect the power cord to the Pi. It will boot into NOOBS and prompt you to install a distro. I chose the 7 Jan 2014 release of Raspbian Wheezy, as it is likely the most mature distro available. The setup screens were very self-explanatory.</p>
+
+<p>Once complete, reboot, and log in (user: pi, password: raspberry). Immediately run <code>raspi-config</code> and, at a minimum, change the default password. Type startx and let&#8217;er rip!</p>
+
+<h2 id='wifi_config'>Wifi config</h2>
+
+<p>Within the graphical interface, there is a wifi configuration tool that will get you online. But, it will require reconfiguration every time you start the window manager. To get wifi connectivity without the hassle, and without the need to even start the GUI, issue <code>sudo nano /etc/network/interfaces</code>, make the file look like this, then <code>sudo reboot</code>:</p>
+
+<pre><code>auto lo
+
+iface lo inet loopback
+iface eth0 inet dhcp
+
+allow-hotplug wlan0
+iface wlan0 inet dhcp
+    wpa-ssid &quot;your_SSID&quot;
+    wpa-psk &quot;your_password&quot;</code></pre>
+
+<h2 id='merica_dammit'>&#8216;merica, dammit!</h2>
+
+<p>Pi is a UK-ish product, and as such, is defaulted to use UK keyboard mapping. There are a ton of how-tos on changing the default to English/US, but none of them worked for me. This did the trick. Issue <code>sudo nano /etc/default/keyboard</code> and change &#8220;gb&#8221; to &#8220;us&#8221;:</p>
+
+<pre><code>XKBMODEL=&quot;pc105&quot;
+XKBLAYOUT=&quot;us&quot;
+XKBVARIANT=&quot;&quot;
+XKBOPTIONS=&quot;&quot;
+
+BACKSPACE=&quot;guess&quot;</code></pre>
+
+<p>Just for good measure, do <code>sudo dpkg-reconfigure keyboard-configuration</code>, and follow the on screen directions. Then <code>sudo reboot</code>.</p>
+
+<h2 id='update_and_install_some_software'>Update and install some software</h2>
+
+<p>Update existing software:</p>
+
+<pre><code>sudo apt-get update; sudo apt-get upgrade</code></pre>
+
+<p>Text editor (vim-gtk will allow the use of gvim):</p>
+
+<pre><code>sudo apt-get install vim vim-gtk</code></pre>
+
+<p>VNC server (if you want one - I&#8217;d rather <code>ssh -Y</code>):</p>
+
+<pre><code>sudo apt-get install tightvncserver
+vncserver :1 -geometry 1280x640 -depth 24</code></pre>
+
+<p>Arduino IDE:</p>
+
+<pre><code>sudo apt-get install arduino</code></pre>
+
+<p>Serial Emulator:</p>
+
+<pre><code>sudo apt-get install minicom</code></pre>
+
+<h2 id='hdmi_sound'>HDMI Sound</h2>
+
+<p>I was about to pull my hair out trying to configure HDMI sound. Fortunately, I didn&#8217;t irreversibly edit too many files or install additional software before discovering that I just needed to turn the volume on the TV up&#8230; HDMI sound was already enabled by default!</p>
+
+<h2 id='pandorapianobar'>Pandora/pianobar</h2>
+
+<p>Now that sound works, install pianobar and check out Pandora via the command line! However, don&#8217;t use the Wheezy repository (i.e., don&#8217;t apt-get). As of this post, the repository version was sorely out of date and could not connect. Instead, follow these <a href='http://technicaltom.wordpress.com/2013/09/12/pianobar_tls_handshake_fix/'>very simple build instructions</a>. Enjoy!</p>
+
+<h2 id='steven_hicksons_piauisuite_rocks'>Steven Hickson&#8217;s PiAUISuite rocks!</h2>
+
+<p>Want to integrate YouTube playback? Voice command? Video playback? This guy put a ton of effort into creating some neat little hacks for the Raspberry Pi. I find it a bit difficult to sift through his blog, but he&#8217;s got writeups and YouTube videos for most of his projects: <a href='http://stevenhickson.blogspot.com'>http://stevenhickson.blogspot.com</a>. Check out the PiAUISuite on GitHub, as well: <a href='https://github.com/StevenHickson/PiAUISuite'>https://github.com/StevenHickson/PiAUISuite</a>. I haven&#8217;t been able to get his Midori user scripts to work with YouTube, but the command line tools are very nice.</p>
+    <hr>
+    <div class="pagination btn-group">
+      
+        <a class="btn prev" href="/geekery/2014/02/18/raking-it-in" title="Raking it in">&larr; Previous</a>
+      
+        <a class="btn" href="/archive.html">Archive</a>
+      
+        <a class="btn next" href="/geekery/2014/02/27/arduino-ide---kustomized" title="Arduino IDE - Kustomized">Next &rarr;</a>
+      
+    </div>
+    <hr>
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    var disqus_shortname = 'yurirage'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+  
+  <div class="span4">
+    <section>
+      <h4>Published</h4>
+      <div class="date"><span>23 February 2014</span></div>
+    </section>
+    
+      <section>
+        <h4>Category</h4>
+        <span class="category">
+          geekery
+        </span>
+      </section>
+         
+    
+      <section>
+        <h4>Tags</h4>
+        <ul class="tag_box">
+          
+          
+
+
+  
+     
+    	<li><a href="/tags.html#pi-ref">pi <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#linux-ref">linux <span>5</span></a></li>
+    
+  
+
+
+
+        </ul>
+      </section>
+             
+  </div>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; 2014 Yuri Rage
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://github.com/dhulihan/hooligan" target="_blank">The Hooligan Theme</a>
+        </p>
+      </footer>
+    </div> <!-- /container -->
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/assets/themes/hooligan/js/jquery.min.js"><\/script>')</script>
+    <script src="/assets/themes/hooligan/bootstrap/js/bootstrap.min.js"></script>
+
+    
+
+
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-47891547-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+  </body>
+</html>
+

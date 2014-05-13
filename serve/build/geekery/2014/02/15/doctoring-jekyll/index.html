@@ -1,0 +1,368 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>
+      
+        Doctoring Jekyll - 
+      
+      Yuri Rage
+    </title>
+    <meta name="description" content="">
+    <meta name="date" content="2014-02-15 21:55:19 +0300">
+    <meta name="author" content="Yuri Rage">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+
+    <link href="/assets/themes/hooligan/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/themes/hooligan/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">    
+    <link rel="stylesheet" type="text/css" href="/assets/themes/hooligan/css-social-buttons/css/zocial.stripped.css">
+    <link href="/assets/themes/hooligan/css/pygments.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/assets/themes/hooligan/css/darkstrap.css" rel="stylesheet" type="text/css" media="all">    
+    <link href="/assets/themes/hooligan/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/assets/yuri.css" rel="stylesheet" type="text/css" media="all">
+
+    <!-- fav and touch icons -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+  </head>
+
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>      
+
+
+          <a class="brand" href="/">Yuri Rage</a>
+
+
+          <div class="nav-collapse">
+            <ul class="nav">
+              
+              
+              
+
+
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+
+
+
+            </ul>
+            <ul class="nav pull-right social visible-desktop">
+              <li class="divider-vertical"></li>
+               
+                <li>
+                  <a href="https://twitter.com/kampferstrahl" class="zocial twitter icon" target="_blank">
+                  <span class="hidden-desktop">Twitter</span>
+                  </a>
+                </li>
+                                        
+                         
+                  
+              
+                <li>
+                  <a href="http://www.youtube.com/user/av8or233" class="zocial youtube icon" target="_blank">
+                    <span class="hidden-desktop">YouTube</span>
+                  </a>
+                </li>
+              
+              
+                <li>
+                  <a href="https://github.com/yuri-rage" class="zocial github icon" target="_blank">
+                    <span class="hidden-desktop">Github</span>
+                  </a>
+                </li>
+              
+                                  
+              
+                <li>
+                  <a href="http://feeds.feedburner.com/yuri-rage" class="zocial rss icon" target="_blank">
+                    <span class="hidden-desktop">FeedBurner</span>
+                  </a>
+                </li>
+              
+           </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="content">
+        
+<div class="page-header">
+  <h1>
+    Doctoring Jekyll 
+    
+      <small>Do you even Jekyll, bro?</small>
+    
+  </h1>
+</div>
+
+<div class="row">
+  <div class="span8">
+    <p>Here&#8217;s how I improved upon the bootstrapped site that I cloned from <a href='http://jekyllbootstrap.com'>Jade Dominguez&#8217;s</a> GitHub repository. I used the <a href='http://themes.jekyllbootstrap.com/preview/hooligan'>Hooligan theme</a> - you&#8217;ll see it throughout the code samples. However, I doubt that any of these hacks are theme-unique.</p>
+
+<h2 id='add_a_post_list_to_the_site_homepage'>Add a post list to the site homepage</h2>
+
+<p>This bit of magic will list all of your posts, starting with the most recent, with links to their titles, each followed by the first 75 words. Jekyll does support the <code>{% excerpt %}</code> liquid tag, allowing you to use <code>&lt;!--more--&gt;</code> separators in your posts if you so choose. Though perhaps less elegant, I thought this was simpler. Here is everything that follows the YAML FrontMatter in my <code>index.md</code>:</p>
+
+<pre><code>{% include JB/setup %}
+
+&lt;div class=&quot;blog-index&quot;&gt;  
+  {% for post in site.posts %}
+  &lt;h2&gt;&lt;a href=&quot;{{ BASE_PATH }}{{ post.url }}&quot;&gt;{{ post.title }}&lt;/a&gt;&lt;/h2&gt;
+  {{ post.content | strip_html | truncatewords:75 }}&lt;br&gt;
+  &lt;a href=&quot;{{ post.url }}&quot;&gt;Read more...&lt;/a&gt;&lt;br&gt;&lt;br&gt;
+  {% endfor %}
+&lt;/div&gt;</code></pre>
+
+<h2 id='add_a_social_media_icon'>Add a social media icon</h2>
+
+<p>The theme includes a few standard social media icons that can be displayed in the upper right of the site&#8217;s navigation bar. While a YouTube channel button is included in <code>assets/themes/hooligan/css-social-buttons/</code>, it isn&#8217;t enabled in the nav-bar by default. Let&#8217;s fix that.</p>
+
+<p>First, add a YouTube line to the author section of <code>_config.yml</code>:</p>
+
+<pre><code>author : 
+  name : [your name]
+  email : [email address]
+  github : [user name]
+  twitter : [user name]
+  feedburner : [user name]
+  youtube : [user/channel name]</code></pre>
+
+<p>Next, add the following markup to <code>_includes/themes/hooligan/default.html</code>:</p>
+
+<pre><code>{% if site.author.youtube %}
+  &lt;li&gt;
+    &lt;a href=&quot;http://www.youtube.com/user/{{ site.author.youtube }}&quot; class=&quot;zocial youtube icon&quot; target=&quot;_blank&quot;&gt;
+    &lt;span class=&quot;hidden-desktop&quot;&gt;YouTube&lt;/span&gt;
+    &lt;/a&gt;
+  &lt;/li&gt;
+{% endif %}</code></pre>
+
+<p>The location for that last bit should be obvious - amongst other similarly listed social media icons. If you did it correctly, a theme-formatted YouTube icon should appear in your site&#8217;s nav-bar, linked to your channel.</p>
+
+<h2 id='pretty_up_those_youtube_embeds'>Pretty up those YouTube embeds</h2>
+
+<p>While we&#8217;re on the subject of YouTube, let&#8217;s talk responsive content. If you simply copy and paste the embed markup from a YouTube video, it won&#8217;t pass muster with Jekyll&#8217;s markup engine. At a minimum, you&#8217;ll need to delete the allowfullscreen keyword, and put a space before <code>&lt;/iframe&gt;</code> in order to avoid site build errors. Once you&#8217;ve done that, you&#8217;ll get an ugly, fixed size frame that might look ok on a full-sized monitor, but will wreak havoc with page displays on tablets and mobile phones. One solution for auto-resizing YouTube frames is to make a <a href='http://brettterpstra.com/2013/01/20/jekyll-tag-plugin-for-responsive-youtube-video-embeds'>Jekyll plugin using a Ruby script</a>. Unfortunately, as of this writing, <a href='https://help.github.com/articles/pages-don-t-build-unable-to-run-jekyll'>GitHub pages do not support Jekyll plugins</a>. Let&#8217;s try <a href='http://css-tricks.com/NetMag/FluidWidthVideo/Article-FluidWidthVideo.php'>something else</a>.</p>
+
+<p>First, create your own style sheet. I called mine, <code>assets/yuri.css</code>:</p>
+
+<pre><code>/* video wrapper - added by yuri */
+/* credit: http://css-tricks.com/NetMag/FluidWidthVideo/Article-FluidWidthVideo.php */
+.videoWrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  padding-top: 25px;
+  height: 0;
+}
+.videoWrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}</code></pre>
+
+<p>Now, create your own HTML include file. Mine is <code>_includes/yuri-style.html</code>:</p>
+
+<pre><code>&lt;link href=&quot;/assets/yuri.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;all&quot;&gt;
+
+&lt;!-- fav and touch icons --&gt;
+&lt;link rel=&quot;shortcut icon&quot; href=&quot;images/favicon.ico&quot;&gt;
+&lt;link rel=&quot;apple-touch-icon&quot; href=&quot;images/apple-touch-icon.png&quot;&gt;
+&lt;link rel=&quot;apple-touch-icon&quot; sizes=&quot;72x72&quot; href=&quot;images/apple-touch-icon-72x72.png&quot;&gt;
+&lt;link rel=&quot;apple-touch-icon&quot; sizes=&quot;114x114&quot; href=&quot;images/apple-touch-icon-114x114.png&quot;&gt;</code></pre>
+
+<p>Note, I included favicon and touch icon markup as well. <a href='http://richmartel.com/articles/favicon.php'>Here&#8217;s a brief tutorial on creating icons</a>.</p>
+
+<p>Finally, add a liquid include tag in the <code>&lt;head&gt;</code> section of <code>_includes/themes/hooligan/default.html</code>:</p>
+
+<pre><code>{% include yuri-style.html %}</code></pre>
+
+<p>That last bit isn&#8217;t the most elegant of solutions, as I had to edit a theme file (again), but if I ever change themes, I suppose I&#8217;ll just reread my own tutorial! To be complete, here&#8217;s an example of properly (for Jekyll) formatted embed markup:</p>
+
+<pre><code>&lt;div class=&#39;videoWrapper&#39;&gt;
+&lt;iframe allowfullscreen=&#39;allowfullscreen&#39; frameborder=&#39;0&#39; height=&#39;315&#39; src=&#39;//www.youtube.com/embed/lWOiGbt9tKg&#39; width=&#39;560&#39;&gt; &lt;/iframe&gt;
+&lt;/div&gt;</code></pre>
+
+<p>Note the space in front of <code>&lt;/iframe&gt;</code>. Also note the allowfullscreen bit (which can just as easily be deleted entirely). For now, I have to remember to wrap them in a videoWrapper section and make sure the formatting meets Jekyll&#8217;s picky syntax expectations. At some point, I may add a Rakefile task to simplify YouTube embeds. Look for a post in the near future about my Jekyll-specific Rakefile tasks.</p>
+    <hr>
+    <div class="pagination btn-group">
+      
+        <a class="btn prev" href="/beer/2014/02/08/microprocessor-powered-steam-injected-brewing" title="Microprocessor powered, steam injected brewing">&larr; Previous</a>
+      
+        <a class="btn" href="/archive.html">Archive</a>
+      
+        <a class="btn next" href="/geekery/2014/02/18/raking-it-in" title="Raking it in">Next &rarr;</a>
+      
+    </div>
+    <hr>
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    var disqus_shortname = 'yurirage'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+  
+  <div class="span4">
+    <section>
+      <h4>Published</h4>
+      <div class="date"><span>15 February 2014</span></div>
+    </section>
+    
+      <section>
+        <h4>Category</h4>
+        <span class="category">
+          geekery
+        </span>
+      </section>
+         
+    
+      <section>
+        <h4>Tags</h4>
+        <ul class="tag_box">
+          
+          
+
+
+  
+     
+    	<li><a href="/tags.html#jekyll-ref">jekyll <span>3</span></a></li>
+     
+    	<li><a href="/tags.html#linux-ref">linux <span>5</span></a></li>
+     
+    	<li><a href="/tags.html#github-ref">github <span>1</span></a></li>
+    
+  
+
+
+
+        </ul>
+      </section>
+             
+  </div>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; 2014 Yuri Rage
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://github.com/dhulihan/hooligan" target="_blank">The Hooligan Theme</a>
+        </p>
+      </footer>
+    </div> <!-- /container -->
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/assets/themes/hooligan/js/jquery.min.js"><\/script>')</script>
+    <script src="/assets/themes/hooligan/bootstrap/js/bootstrap.min.js"></script>
+
+    
+
+
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-47891547-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+  </body>
+</html>
+
