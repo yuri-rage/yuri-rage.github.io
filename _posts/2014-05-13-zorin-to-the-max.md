@@ -3,7 +3,7 @@ layout: post
 title: "Zorin to the Max"
 tagline: "Linux for everynerd"
 description: ""
-category: 
+category: Geekery
 tags: [linux]
 date: "Tue, 13 May 2014 23:17:39 +0300"
 ---
