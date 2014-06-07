@@ -23,12 +23,12 @@ If you want a lightweight X environment, it doesn't get much better than OpenBox
 
 ##transparent desktop terminal##
 ![Arch Screenshot]({{ site.url }}/images/arch-terminal.png)
-I chose urxvt as my default terminal app.  It's very lightweight and surprisingly configurable via .Xdefaults.  I even managed to "theme" it with [solarized](http://ethanschoonover.com/solarized) colors.  Rather than installing tilda, guake, yakuake, etc, I decided to see if urxvt could reside semi-permanently and unobtrusively on my desktop...and it can!  The trick is to use the -name flag to give the window a unique name, make the window title static/identifiable, and then tell OpenBox and compton to treat that window somewhat uniquely.  Search for UrxvtDesktop in these files for the details:<br>
+I chose urxvt as my default terminal app.  It's very lightweight and surprisingly configurable via .Xresources.  I even managed to "theme" it with [solarized](http://ethanschoonover.com/solarized) colors.  Rather than installing tilda, guake, yakuake, etc, I decided to see if urxvt could reside semi-permanently and unobtrusively on my desktop...and it can!  The trick is to use the -name flag to give the window a unique name, make the window title static/identifiable, and then tell OpenBox and compton to treat that window somewhat uniquely.  Search for UrxvtDesktop in these files for the details:<br>
 [autostart](https://github.com/yuri-rage/yuri_config/blob/master/.config/openbox/autostart)<br>
 [.bashrc](https://github.com/yuri-rage/yuri_config/blob/master/.bashrc)<br>
 [compton.conf](https://github.com/yuri-rage/yuri_config/blob/master/.config/compton.conf)<br>
 [rc.xml](https://github.com/yuri-rage/yuri_config/blob/master/.config/openbox/rc.xml)<br>
-[.Xdefaults](https://github.com/yuri-rage/yuri_config/blob/master/.Xdefaults)<br>
+[.Xresources](https://github.com/yuri-rage/yuri_config/blob/master/.Xresources)<br>
 
 ##transparency in configuration##
 I created a GitHub repo with many of my config files.  You're welcome to dig through them and see what works for you.  For starters, look at .config/tint2/tint2rc, the keybindings in .config/openbox/rc.xml, the custom commands in .config/openbox/menu.xml, the opacity rules in .config/compton.config, and the .config/openbox/autostart script.  I'll try to keep the repo updated with my latest hacks.<br>
