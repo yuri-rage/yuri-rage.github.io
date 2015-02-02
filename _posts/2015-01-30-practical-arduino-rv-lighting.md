@@ -71,7 +71,7 @@ All of my source code is [available on GitHub](https://github.com/yuri-rage/wifi
 I encourage you to [download and install the latest OpenWrt-Yun image](http://arduino.cc/en/Tutorial/YunSysupgrade) before doing any significant sketch development.  Then follow the [Getting Started Guide](http://arduino.cc/en/Guide/ArduinoYun) to get familiar with the Yún and its architecture.  Also, take a look at the YunSerialTerminal and Bridge example sketches.
 
 Basic code architecture:
-<F11>
+
 * User interface is via an OpenWrt/Linux served, Javascript-centric webpage
 * Upon initial webpage load, the Yún's clock is synced (via REST and Bridge calls) with the user's system clock, overcoming Yún's lack of a RTC
 * Web-initiated REST calls pass user input to the 32U4 sketch via the Bridge
